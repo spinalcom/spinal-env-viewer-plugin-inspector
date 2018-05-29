@@ -17,6 +17,9 @@ export default {
       test: true
     };
   },
+  components: {
+    addTheme
+  },
   props: ["inspector"],
   methods: {
     vierge: function() {

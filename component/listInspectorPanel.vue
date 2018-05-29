@@ -25,7 +25,7 @@ var spinalSystem;
 var viewer;
 import { group, theme, bimObject } from "../model/model";
 import contextMenu from "./contextMenu.vue";
-import referentialEvent from "./event.vue";
+import event from "./event.vue";
 export default {
   name: "addGroup",
 
@@ -45,7 +45,7 @@ export default {
     themePanel: function(group) {
       let check = false;
       let hideOrShow;
-      referentialEvent.$emit("themeEvent", group, this.tabPanel);
+      event.$emit("themeEvent", group, this.tabPanel);
       for (let i = 0; i < this.tabPanel.length; i++) {
         if (this.tabPanel[i].titleLabel.indexOf("theme") > -1) {
           check = true;
@@ -67,7 +67,7 @@ export default {
     referentialPanel: function(group) {
       let check = false;
       let hideOrShow;
-      referentialEvent.$emit("refEvent", group, this.tabPanel);
+      event.$emit("refEvent", group);
       for (let i = 0; i < this.tabPanel.length; i++) {
         if (this.tabPanel[i].titleLabel.indexOf("referential") > -1) {
           check = true;

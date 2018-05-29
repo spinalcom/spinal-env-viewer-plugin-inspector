@@ -5,7 +5,7 @@
             <md-icon>remove_red_eye</md-icon>
           </md-button>
           <addTheme :selectedGroup="selectedGroup"></addTheme>
-          <md-button v-on:click="referentialPanel(selectedGroup)">
+          <md-button v-on:click="referentialPanel(selectedGroup)" :click="theme = false">
             <md-icon>comment</md-icon>
           </md-button>
           <md-button @click="deleteRef(selectedGroup)">
@@ -14,26 +14,25 @@
     </md-toolbar>
 
 <md-list>
-      <md-list-item v-for="item in newList">
+      <md-list-item v-for="(item, index) in newList" :key="index">
         <div>{{ item.name.get()}}</div>
         <div>
           <md-button @click="viewGroup">
             <md-icon>remove_red_eye</md-icon>
           </md-button>
-          <md-button v-on:click="referentialPanel(item)">
+          <md-button v-on:click="referentialPanel(item)" :click="theme = true">
             <md-icon>find_in_page</md-icon>
           </md-button>
           <md-button v-on:click="deleteTheme(item)">
             <md-icon>delete_forever</md-icon>
           </md-button>
-     
         </div>
       </md-list-item>
 </md-list>
 
 
   </md-content>
-</template>
+</template>theme=true
 
 
 <script>
@@ -51,7 +50,8 @@ export default {
       selectedGroup: "",
       tabPanel: [],
       newList: [],
-      tabBind: []
+      tabBind: [],
+      theme: false
     };
   },
   components: {
@@ -66,7 +66,7 @@ export default {
         if (this.selectedGroup) {
           this.selectedGroup.group.unbind(this.onModelChange);
           selectedGroup.group.bind(this.onModelChange);
-        }
+        } else selectedGroup.group.bind(this.onModelChange);
         this.selectedGroup = selectedGroup;
         this.tabPanel = panel;
       });
@@ -78,11 +78,12 @@ export default {
         this.newList.push(this.selectedGroup.group[i]);
       }
     },
-    referentialPanel: function(group) {
+    referentialPanel: function(group, theme) {
       let check = false;
       let hideOrShow;
-
-      event.$emit("refEvent", group);
+      if (this.theme)
+        event.$emit("refEvent", group, true, this.selectedGroup.allObject);
+      else event.$emit("refEvent", group);
       for (let i = 0; i < this.tabPanel.length; i++) {
         if (this.tabPanel[i].titleLabel.indexOf("referential") > -1) {
           check = true;
