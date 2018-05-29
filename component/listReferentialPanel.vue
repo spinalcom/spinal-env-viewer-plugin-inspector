@@ -3,12 +3,7 @@
       <md-list-item v-for="(item, index) in list" :key="index">
         <div>{{ item.name.get()}}</div>
         <div>
-          <md-button>
-            <md-icon>remove_red_eye</md-icon>
-          </md-button>
-          <md-button >
-            <md-icon>add</md-icon>
-          </md-button>
+          <change-group :selectedgroup="selectedGroup"></change-group>
           <md-button v-on:click="deleteBIMObject(item)">
             <md-icon>delete_forever</md-icon>
           </md-button>
@@ -22,6 +17,8 @@
 var spinalSystem;
 var viewer;
 import { group, theme, bimObject } from "../model/model";
+import changeGroup from "./changeGroupBIMObject.vue";
+
 export default {
   name: "addGroup",
 
@@ -30,10 +27,13 @@ export default {
       test: true
     };
   },
-  props: ["list"],
+  components: {
+    changeGroup
+  },
+  props: ["list", "selectedGroup"],
   methods: {
-    vierge: function() {
-      console.log("vierge");
+    deleteBIMObject: function(item) {
+      console.log(item);
     }
   },
   mounted() {

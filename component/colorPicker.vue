@@ -1,6 +1,6 @@
 <template>
   <md-menu md-direction="bottom-end" :md-close-on-select="false">
-      <md-button class="myColor" md-menu-trigger  :style="{'background-color': colors.hex}">
+      <md-button md-menu-trigger  :style="{'background-color': colors.hex}">
       </md-button>
     <md-menu-content>
         <md-menu-item @click="vierge">

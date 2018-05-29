@@ -18,24 +18,7 @@
           </md-button>
     </md-toolbar>
 
-    <ref-list v-if="BIMObjectList.length > 0" :list="BIMObjectList"></ref-list>
-
-    <!-- <md-list>
-      <md-list-item v-for="(item, index) in BIMObjectList" :key="index">
-        <div>{{ item.name.get()}}</div>
-        <div>
-          <md-button>
-            <md-icon>remove_red_eye</md-icon>
-          </md-button>
-          <md-button >
-            <md-icon>find_in_page</md-icon>
-          </md-button>
-          <md-button v-on:click="deleteBIMObject(item)">
-            <md-icon>delete_forever</md-icon>
-          </md-button>
-        </div>
-      </md-list-item>
-    </md-list> -->
+    <ref-list v-if="BIMObjectList.length > 0" :list="BIMObjectList" :selectedGroup="selectedGroup"></ref-list>
   </md-content>
 </template>
 
@@ -99,7 +82,7 @@ export default {
         newBimObject.name.set(
           viewer.model.getData().instanceTree.getNodeName(items[i])
         );
-        newBimObject.group.set(0);
+        newBimObject.group.push(this.selectedGroup.group[0]);
         this.referential.push(newBimObject);
       }
       console.log(this.referential);
