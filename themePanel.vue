@@ -20,6 +20,7 @@
           <md-button @click="viewGroup">
             <md-icon>remove_red_eye</md-icon>
           </md-button>
+          <color-picker :selectedGroup="item"></color-picker>
           <md-button v-on:click="referentialPanel(item)" :click="theme = true">
             <md-icon>find_in_page</md-icon>
           </md-button>
@@ -41,6 +42,7 @@ var viewer;
 import { group, theme, bimObject } from "./model/model";
 import event from "./component/event.vue";
 import addTheme from "./component/addTheme.vue";
+import colorPicker from "./component/colorPicker.vue";
 
 export default {
   name: "themePanel",
@@ -55,7 +57,8 @@ export default {
     };
   },
   components: {
-    addTheme
+    addTheme,
+    colorPicker
   },
   props: ["inspector"],
   methods: {
