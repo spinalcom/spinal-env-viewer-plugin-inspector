@@ -3,7 +3,7 @@
       <md-list-item v-for="(item, index) in list" :key="index">
         <div>{{ item.name.get()}}</div>
         <div>
-          <change-group :selectedgroup="selectedGroup"></change-group>
+          <change-group :item="item" :selectedgroup="selectedGroup"></change-group>
           <md-button v-on:click="deleteBIMObject(item)">
             <md-icon>delete_forever</md-icon>
           </md-button>
@@ -16,7 +16,7 @@
 <script>
 var spinalSystem;
 var viewer;
-import { group, theme, bimObject } from "../model/model";
+
 import changeGroup from "./changeGroupBIMObject.vue";
 
 export default {

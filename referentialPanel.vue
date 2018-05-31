@@ -1,9 +1,8 @@
 <template>
   <md-content class="container md-scrollbar">
     <md-toolbar style="box-sizing: border-box;">
-          <md-button @click="addItem(group)">
-            <md-icon>add</md-icon>
-          </md-button>
+          <add-b-i-m-object :selectedGroup="selectedGroup" :referential="referential"></add-b-i-m-object>      
+
           <md-button @click="selectRef(selectedGroup)">
             <md-icon>games</md-icon>
           </md-button>
@@ -18,7 +17,7 @@
           </md-button>
     </md-toolbar>
 
-    <ref-list v-if="BIMObjectList.length > 0" :list="BIMObjectList" :selectedGroup="selectedGroup"></ref-list>
+    <list-referential-panel :list="onModelChange()" :selectedGroup="selectedGroup"></list-referential-panel>
   </md-content>
 </template>
 
@@ -26,10 +25,11 @@
 <script>
 var spinalSystem;
 var viewer;
-import { group, theme, bimObject } from "./model/model";
+import model from "spinal-models-bim_forge";
 import event from "./component/event.vue";
-import refList from "./component/listReferentialPanel.vue";
-
+import listReferentialPanel from "./component/listReferentialPanel.vue";
+import addBIMObject from "./component/addBIMObject.vue";
+let BIMObjectList = [];
 export default {
   name: "addGroup",
 
@@ -37,56 +37,51 @@ export default {
     return {
       selectedGroup: "",
       theme: false,
-      referential: [],
-      BIMObjectList: []
+      group: "",
+      referential: []
     };
   },
   components: {
-    refList
+    addBIMObject,
+    listReferentialPanel
   },
   props: ["inspector"],
   methods: {
     getEvent: function() {
-      event.$on("refEvent", (selectedGroup, theme, referential) => {
+      event.$on("refEvent", (selectedGroup, theme, group) => {
         console.log("CECI EST LE REFERENCIEL PANEL");
 
         if (theme) {
           this.theme = theme;
-          this.referential = referential;
+          this.referential = group.allObject;
+          this.group = group;
         } else {
           this.theme = undefined;
           this.referential = selectedGroup.allObject;
+          this.group = selectedGroup;
         }
         this.selectedGroup = selectedGroup;
-        this.selectedGroup.allObject.bind(this.onModelChange);
-        // this.BIMObjectList = selectedGroup.allObject;
+        console.log(this.selectedGroup);
+        // this.referential.unbind(this.onModelChange);
+        // this.referential.bind(this.onModelChange);
       });
     },
     onModelChange: function() {
-      this.BIMObjectList = [];
-      for (let i = 0; i < this.selectedGroup.allObject.length; i++) {
-        this.BIMObjectList.push(this.selectedGroup.allObject[i]);
+      if (this.selectedGroup) {
+        BIMObjectList = [];
+        if (this.theme) {
+          for (let i = 0; i < this.selectedGroup.BIMObjects.length; i++) {
+            BIMObjectList.push(this.selectedGroup.BIMObjects[i]);
+          }
+        } else {
+          for (let i = 0; i < this.referential.length; i++) {
+            BIMObjectList.push(this.referential[i]);
+          }
+        }
       }
+      return BIMObjectList;
     },
-    addItem: function() {
-      var items = viewer.getSelection();
-      console.log("addItemInReferencial");
-      console.log(items);
-      if (items.length == 0) {
-        alert("No model selected !");
-        return;
-      }
-      for (let i = 0; i < items.length; i++) {
-        var newBimObject = new bimObject();
-        newBimObject.dbId.set(items[i]);
-        newBimObject.name.set(
-          viewer.model.getData().instanceTree.getNodeName(items[i])
-        );
-        newBimObject.group.push(this.selectedGroup.group[0]);
-        this.referential.push(newBimObject);
-      }
-      console.log(this.referential);
-    },
+
     selectRef: function() {},
     chart: function() {},
     restoreRef: function() {},

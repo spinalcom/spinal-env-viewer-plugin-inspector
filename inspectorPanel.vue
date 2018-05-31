@@ -66,6 +66,7 @@ export default {
           });
           forgeFile.inspector.load(inspector => {
             this.inspector = inspector;
+            this.inspector.bind(this.onModelChange);
           });
         }
       }

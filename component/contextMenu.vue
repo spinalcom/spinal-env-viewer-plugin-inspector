@@ -25,7 +25,7 @@
 <script>
 var spinalSystem;
 var viewer;
-import { group, theme, bimObject } from "../model/model";
+
 import event from "./event.vue";
 import rename from "./renameGroup.vue";
 

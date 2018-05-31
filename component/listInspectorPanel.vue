@@ -23,7 +23,7 @@
 <script>
 var spinalSystem;
 var viewer;
-import { group, theme, bimObject } from "../model/model";
+
 import contextMenu from "./contextMenu.vue";
 import event from "./event.vue";
 export default {

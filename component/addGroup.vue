@@ -18,7 +18,7 @@
 <script>
 var spinalSystem;
 var viewer;
-import { group, theme, bimObject } from "../model/model";
+import { group } from "../model/model";
 export default {
   name: "addGroup",
 
@@ -31,6 +31,7 @@ export default {
   props: ["inspector"],
   methods: {
     addGroup: function() {
+      console.log(group);
       var myNewGroup = new group();
       myNewGroup.name.set(this.value);
       this.inspector.push(myNewGroup);

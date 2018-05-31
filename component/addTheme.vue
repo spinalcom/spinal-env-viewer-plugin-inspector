@@ -18,7 +18,8 @@
 <script>
 var spinalSystem;
 var viewer;
-import { group, theme, bimObject } from "../model/model";
+import model from "spinal-models-bim_forge";
+
 export default {
   name: "addGroup",
 
@@ -31,8 +32,13 @@ export default {
   props: ["selectedGroup"],
   methods: {
     addGroup: function() {
-      var myNewGroup = new theme();
-      myNewGroup.name.set(this.value);
+      var myNewGroup = new model.SpinalBIMGroupForge(
+        this.value,
+        [],
+        false,
+        "blue"
+      );
+      // myNewGroup.name.set(this.value);
       this.selectedGroup.group.push(myNewGroup);
       this.active = false;
     }
