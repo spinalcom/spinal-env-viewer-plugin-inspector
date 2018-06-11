@@ -3,17 +3,15 @@
       <md-list-item v-for="(spinalGroup, index) in list" :key="index" v-on:click.right="rightClickContextMenu">
         <div>{{ spinalGroup.name.get()}}</div>
         <div>
-          <md-button @click="viewGroup(spinalGroup)">
-            <md-icon>remove_red_eye</md-icon>
-          </md-button>
+          <icon-inspector-panel :selectedGroup="spinalGroup"></icon-inspector-panel>
           <md-button v-on:click="referentialPanel(spinalGroup)">
-            <md-icon>comment</md-icon>
+            <md-icon>location_city</md-icon>
           </md-button>
-          <md-button v-on:click="themePanel(spinalGroup)">
+          <md-button v-on:click="themePanel(spinalGroup, icon)">
             <md-icon>assignment</md-icon>
           </md-button>
           
-           <contextMenu :spinalGroup="spinalGroup"></contextMenu>
+           <contextMenu :selectedGroup="spinalGroup" :tabPanel="tabPanel"></contextMenu>
         </div>
       </md-list-item>
     </md-list>
@@ -26,23 +24,23 @@ var viewer;
 
 import contextMenu from "./contextMenu.vue";
 import event from "./event.vue";
+import iconInspectorPanel from "./iconEyeInspectorPanel.vue";
 export default {
   name: "addGroup",
 
   data() {
     return {
-      active: false
+      active: false,
+      allActive: false
     };
   },
   props: ["list", "spinalGroup", "tabPanel"],
   components: {
-    contextMenu
+    contextMenu,
+    iconInspectorPanel
   },
   methods: {
-    rightClickContextMenu: function(group) {
-      this.active = true;
-    },
-    themePanel: function(group) {
+    themePanel: function(group, icon) {
       let check = false;
       let hideOrShow;
       event.$emit("themeEvent", group, this.tabPanel);
@@ -85,8 +83,7 @@ export default {
             hideOrShow.setTitle("referential : " + group.name.get());
           } else hideOrShow.setVisible(false);
         }
-    },
-    viewGroup: function(group) {}
+    }
   },
   mounted() {
     viewer = window.spinal.ForgeViewer.viewer;

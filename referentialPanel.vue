@@ -17,7 +17,7 @@
           </md-button>
     </md-toolbar>
 
-    <list-referential-panel :list="onModelChange()" :selectedGroup="selectedGroup"></list-referential-panel>
+    <list-referential-panel :list="onModelChange()" :selectedGroup="group"></list-referential-panel>
   </md-content>
 </template>
 

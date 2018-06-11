@@ -1,12 +1,19 @@
 <template>
     <md-list>
-      <md-list-item v-for="(item, index) in list" :key="index">
-        <div>{{ item.name.get()}}</div>
+      <md-list-item v-for="index in list.length" :key="index">
+        <div>{{ list[index - 1].name.get()}}</div>
         <div>
-          <change-group :item="item" :selectedgroup="selectedGroup"></change-group>
-          <md-button v-on:click="deleteBIMObject(item)">
-            <md-icon>delete_forever</md-icon>
-          </md-button>
+          <change-group :item="list[index - 1]" :selectedgroup="selectedGroup"></change-group>
+
+              <md-menu md-direction="bottom-end">
+      <md-button md-menu-trigger>
+        <md-icon>more_vert</md-icon>
+      </md-button>
+      <md-menu-content>
+        <md-menu-item @click="deleteBIMObject(list[index - 1])">
+          <md-icon>delete_forever</md-icon>Delete</md-menu-item>
+      </md-menu-content>
+    </md-menu>
         </div>
       </md-list-item>
     </md-list>
@@ -33,6 +40,12 @@ export default {
   props: ["list", "selectedGroup"],
   methods: {
     deleteBIMObject: function(item) {
+      console.log(this.selectedGroup);
+      for (let i = 0; i < this.selectedGroup.allObject.length; i++) {
+        const element = this.selectedGroup.allObject[i];
+        if (item === this.selectedGroup.allObject[i])
+          this.selectedGroup.allObject.splice(i, 1);
+      }
       console.log(item);
     }
   },

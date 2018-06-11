@@ -24,35 +24,40 @@ export default {
     addItem: function() {
       var items = viewer.getSelection();
       console.log("addItemInReferencial");
-      console.log(items);
+      // console.log(items);
       if (items.length == 0) {
         alert("No model selected !");
         return;
       }
       var test = true;
+
       for (let i = 0; i < items.length; i++) {
         // _id, _name, _group, _display, _color
-        test = true;
+        test = false;
+        console.log(items[i]);
         for (let j = 0; j < this.referential.length; j++) {
           if (this.referential[j].id.get() === items[i]) {
-            test = false;
+            test = true;
           }
         }
-        console.log("add de l'objet");
-        console.log(test);
-        if (test) {
+
+        if (!test) {
+          console.log("add de l'objet");
+          // console.log(test);
           var newBimObject = new model.SpinalBIMObjectForge(
             items[i],
             viewer.model.getData().instanceTree.getNodeName(items[i]),
             this.selectedGroup.group[0],
             false,
-            "blue"
+            this.selectedGroup.group[0].color.get()
           );
+          // newBimObject.color.set(this.selectedGroup.group[0].color.get());
           this.selectedGroup.group[0].BIMObjects.push(newBimObject);
+          if (newBimObject) this.referential.push(newBimObject);
         }
+        // console.log(newBimObject);
       }
-      console.log(newBimObject);
-      if (newBimObject) this.referential.push(newBimObject);
+
       // console.log(this.referential);
     }
   },

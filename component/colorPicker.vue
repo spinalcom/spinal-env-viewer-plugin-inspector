@@ -34,6 +34,12 @@ export default {
     vierge: function() {
       this.selectedGroup.color.set(this.colors.hex);
       console.log(this.colors);
+      console.log(this.selectedGroup.color.get());
+      console.log(this.color);
+      for (let i = 0; i < this.selectedGroup.BIMObjects.length; i++) {
+        const element = this.selectedGroup.BIMObjects[i];
+        element.color.set(this.selectedGroup.color.get());
+      }
     },
     getColor: function() {
       return { "background-color": this.selectedGroup.color.get() };

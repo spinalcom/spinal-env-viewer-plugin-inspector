@@ -1,7 +1,8 @@
 <template>
   <md-content class="container md-scrollbar">
     <add-group :inspector="inspector"></add-group>
-    
+    <color-b-i-m-object></color-b-i-m-object>
+
     <list-inspector-panel :list="list" :tabPanel="tabPanel"></list-inspector-panel>
     <rename></rename>
     <deleteGroup :inspector="inspector"></deleteGroup>
@@ -15,11 +16,11 @@ import Vue from "vue";
 
 import addGroup from "./component/addGroup.vue";
 import listInspectorPanel from "./component/listInspectorPanel.vue";
-import referentialEvent from "./component/event.vue";
 import referentialPanel from "./referentialPanel.vue";
 import themePanel from "./themePanel.vue";
 import rename from "./component/renameGroup.vue";
 import deleteGroup from "./component/deleteGroup.vue";
+import colorBIMObject from "./component/colorBIMObject.vue";
 
 const refComponentCtor = Vue.extend(referentialPanel);
 const themeComponentCtor = Vue.extend(themePanel);
@@ -34,6 +35,7 @@ export default {
     };
   },
   components: {
+    colorBIMObject,
     addGroup,
     listInspectorPanel,
     rename,
@@ -50,6 +52,7 @@ export default {
   mounted() {
     viewer = window.spinal.ForgeViewer.viewer;
     spinalSystem = window.spinal.spinalSystem;
+
     spinalSystem.getModel().then(forgeFile => {
       if (forgeFile) {
         if (forgeFile.inspector) {
@@ -82,13 +85,13 @@ export default {
       }
     }
     if (!check) {
-      let hideOrShow = new PanelClass(viewer, "theme:");
+      let hideOrShow = new PanelClass(viewer, "theme :");
       var _container = document.createElement("div");
       _container.className = hideOrShow.container.id + "-pannelcontainer";
       _container.style.height = "calc(100% - 45px)";
       _container.style.overflowY = "auto";
-      hideOrShow.container.style.minWidth = "395px";
-      hideOrShow.container.style.width = "450px";
+      hideOrShow.container.style.minWidth = "480px";
+      hideOrShow.container.style.width = "480px";
       hideOrShow.container.style.height = "300px";
       hideOrShow.container.style.minHeight = "200px";
       hideOrShow.container.style.right = "0px";
@@ -97,14 +100,14 @@ export default {
       this.tabPanel.push(hideOrShow);
     }
     if (!check2) {
-      let hideOrShow = new PanelClass(viewer, "referential:");
+      let hideOrShow = new PanelClass(viewer, "referential :");
       var _container = document.createElement("div");
       _container.className = hideOrShow.container.id + "-pannelcontainer";
       _container.style.height = "300px";
       _container.style.overflowY = "auto";
 
-      hideOrShow.container.style.minWidth = "482px";
-      hideOrShow.container.style.width = "482px";
+      hideOrShow.container.style.minWidth = "490px";
+      hideOrShow.container.style.width = "490px";
       hideOrShow.container.style.height = "300px";
       hideOrShow.container.style.minHeight = "200px";
 
