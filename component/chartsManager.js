@@ -25,10 +25,10 @@ chartsManager.createPanel = function (selectedGroup) {
   _container.className = hideOrShow.container.id + "-pannelcontainer";
   _container.style.height = "calc(100% - 45px)";
   _container.style.overflowY = "auto";
-  hideOrShow.container.style.minWidth = "395px";
-  hideOrShow.container.style.width = "450px";
-  hideOrShow.container.style.height = "300px";
-  hideOrShow.container.style.minHeight = "200px";
+  hideOrShow.container.style.minWidth = "225px";
+  hideOrShow.container.style.width = "225px";
+  hideOrShow.container.style.height = "260px";
+  hideOrShow.container.style.minHeight = "260px";
   hideOrShow.container.style.right = "0px";
   hideOrShow.container.appendChild(_container);
   new chartsComponentCtor().$mount(_container);

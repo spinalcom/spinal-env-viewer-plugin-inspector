@@ -14,8 +14,7 @@
 <script>
 var spinalSystem;
 var viewer;
-// {'background-color': colors.hex}
-import Chrome from "../../node_modules/vue-color/src/components/Chrome.vue";
+import { Chrome } from "vue-color";
 // var Chrome = require("vue-color/src/Chrome.vue");
 export default {
   name: "colorpicker",

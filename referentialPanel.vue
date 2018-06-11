@@ -3,9 +3,6 @@
     <md-toolbar style="box-sizing: border-box;">
           <add-b-i-m-object :selectedGroup="selectedGroup" :referential="referential"></add-b-i-m-object>      
 
-          <md-button @click="selectRef(selectedGroup)">
-            <md-icon>games</md-icon>
-          </md-button>
           <md-button @click="chart(selectedGroup)">
             <md-icon>insert_chart</md-icon>
           </md-button>
