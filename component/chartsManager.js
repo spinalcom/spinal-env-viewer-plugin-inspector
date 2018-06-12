@@ -15,7 +15,6 @@ chartsManager.createPanel = function (selectedGroup) {
     if (element.group == selectedGroup)
       return element.panel;
   }
-  console.log(element);
   let hideOrShow = null;
   hideOrShow = new PanelClass(
     window.spinal.ForgeViewer.viewer,

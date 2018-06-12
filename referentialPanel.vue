@@ -1,17 +1,27 @@
 <template>
   <md-content class="container md-scrollbar">
     <md-toolbar style="box-sizing: border-box;">
-          <add-b-i-m-object :selectedGroup="selectedGroup" :referential="referential"></add-b-i-m-object>      
+          <md-button v-if="group != selectedGroup" @click="referentialPanel()">
+            <md-icon>location_city</md-icon>
+          </md-button>
+          
+          <add-b-i-m-object :selectedGroup="group" :referential="referential" :group="selectedGroup"></add-b-i-m-object>      
 
-          <md-button @click="chart(selectedGroup)">
+          <md-button @click="chart(group)">
             <md-icon>insert_chart</md-icon>
           </md-button>
-          <md-button @click="restoreRef(selectedGroup)">
+          <md-button @click="restoreRef()">
             <md-icon>clear</md-icon>
           </md-button>
-          <md-button @click="deleteRef(selectedGroup)">
+          <md-button @click="onConfirm()">
             <md-icon>delete_sweep</md-icon>
           </md-button>
+        <md-dialog-confirm
+      :md-active.sync="active"
+      md-title="You will definitly erase all your BIMObject, Are you sure ? "
+      md-confirm-text="Agree"
+      md-cancel-text="Disagree"
+      @md-confirm="deleteRef" />
     </md-toolbar>
 
     <list-referential-panel :list="onModelChange()" :selectedGroup="group"></list-referential-panel>
@@ -22,10 +32,14 @@
 <script>
 var spinalSystem;
 var viewer;
+// Dans ce component, selectedGroup est inversé avec le group, je me suis trompé dans les nom
+
 import model from "spinal-models-bim_forge";
 import event from "./component/event.vue";
 import listReferentialPanel from "./component/listReferentialPanel.vue";
 import addBIMObject from "./component/addBIMObject.vue";
+var chartsPanel = require("./component/chartsManager.js");
+
 let BIMObjectList = [];
 export default {
   name: "addGroup",
@@ -33,6 +47,7 @@ export default {
   data() {
     return {
       selectedGroup: "",
+      active: false,
       theme: false,
       group: "",
       referential: []
@@ -78,11 +93,69 @@ export default {
       }
       return BIMObjectList;
     },
-
-    selectRef: function() {},
-    chart: function() {},
-    restoreRef: function() {},
-    deleteRef: function() {}
+    referentialPanel: function() {
+      event.$emit("refEvent", this.group);
+    },
+    chart: function(group) {
+      console.log("charts in referential panel");
+      console.log(group);
+      let panel = chartsPanel.createPanel(group);
+      event.$emit("chartsEvent", group, panel);
+    },
+    restoreRef: function() {
+      if (this.group != this.selectedGroup) {
+        for (let i = 0; i < this.selectedGroup.BIMObjects.length; i++) {
+          const element = this.selectedGroup.BIMObjects[i];
+          element.group.set(this.group.group[0]);
+          element.color.set(this.group.group[0].color.get());
+          this.group.group[0].BIMObjects.push(element);
+        }
+        this.selectedGroup.BIMObjects.splice(
+          0,
+          this.selectedGroup.BIMObjects.length
+        );
+      } else {
+        for (let i = 0; i < this.group.group.length; i++) {
+          const element = this.group.group[i];
+          element.BIMObjects.splice(0, element.BIMObjects.length);
+        }
+        for (let i = 0; i < this.group.allObject.length; i++) {
+          const element = this.group.allObject[i];
+          element.group.set(this.group.group[0]);
+          element.color.set(this.group.group[0].color.get());
+          this.group.group[0].BIMObjects.push(element);
+        }
+      }
+    },
+    onConfirm: function() {
+      this.active = true;
+    },
+    deleteRef: function() {
+      console.log("group");
+      console.log(this.group);
+      console.log("selectedGroup");
+      console.log(this.selectedGroup);
+      if (this.group != this.selectedGroup) {
+        for (let i = 0; i < this.group.allObject.length; i++) {
+          const element = this.group.allObject[i];
+          if (element.group.data.value == this.selectedGroup._server_id) {
+            this.group.allObject.splice(i, 1);
+            i--;
+          }
+        }
+        this.selectedGroup.BIMObjects.splice(
+          0,
+          this.selectedGroup.BIMObjects.length
+        );
+      } else {
+        this.group.allObject.splice(0, this.group.allObject.length);
+        for (let i = 0; i < this.group.group.length; i++) {
+          const element = this.group.group[i];
+          element.BIMObjects.splice(0, element.BIMObjects.length);
+        }
+      }
+      this.active = false;
+    }
   },
   mounted() {
     viewer = window.spinal.ForgeViewer.viewer;

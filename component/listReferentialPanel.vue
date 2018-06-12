@@ -43,8 +43,18 @@ export default {
       console.log(this.selectedGroup);
       for (let i = 0; i < this.selectedGroup.allObject.length; i++) {
         const element = this.selectedGroup.allObject[i];
-        if (item === this.selectedGroup.allObject[i])
+        if (item === this.selectedGroup.allObject[i]) {
+          for (let j = 0; j < this.selectedGroup.group.length; j++) {
+            const group = this.selectedGroup.group[j];
+            if (group._server_id == item.group.data.value) {
+              for (let k = 0; k < group.BIMObjects.length; k++) {
+                const BIMObject = group.BIMObjects[k];
+                if (item === BIMObject) group.BIMObjects.splice(k, 1);
+              }
+            }
+          }
           this.selectedGroup.allObject.splice(i, 1);
+        }
       }
       console.log(item);
     }

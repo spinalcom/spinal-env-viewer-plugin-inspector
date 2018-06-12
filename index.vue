@@ -57,6 +57,8 @@ const classExtention = class {
     icon.className = "adsk-button-icon md-icon md-icon-font md-theme-default";
     icon.innerHTML = ButtonIcon;
     button1.setToolTip(ButtonLabel);
+    button1.addClass("spinalColorButton");
+
     this.subToolbar = this.viewer.toolbar.getControl("spinalcom");
     if (!this.subToolbar) {
       this.subToolbar = new Autodesk.Viewing.UI.ControlGroup("spinalcom");
@@ -87,3 +89,8 @@ export default new class {
   }
 }();
 </script>
+<style>
+.spinalColorButton {
+  background-color: rgba(17, 48, 223, 0.644);
+}
+</style>

@@ -9,6 +9,7 @@
 var spinalSystem;
 var viewer;
 import model from "spinal-models-bim_forge";
+import { group } from "../model/model";
 
 export default {
   name: "addGroup",
@@ -19,7 +20,7 @@ export default {
       active: false
     };
   },
-  props: ["selectedGroup", "referential"],
+  props: ["selectedGroup", "referential", "group"],
   methods: {
     addItem: function() {
       var items = viewer.getSelection();
@@ -43,7 +44,7 @@ export default {
 
         if (!test) {
           console.log("add de l'objet");
-          // console.log(test);
+          console.log(this.selectedGroup);
           var newBimObject = new model.SpinalBIMObjectForge(
             items[i],
             viewer.model.getData().instanceTree.getNodeName(items[i]),
@@ -52,8 +53,15 @@ export default {
             this.selectedGroup.group[0].color.get()
           );
           // newBimObject.color.set(this.selectedGroup.group[0].color.get());
-          this.selectedGroup.group[0].BIMObjects.push(newBimObject);
           if (newBimObject) this.referential.push(newBimObject);
+          console.log(this.selectedGroup);
+          if (this.group != this.selectedGroup) {
+            newBimObject.color.set(this.group.color.get());
+            newBimObject.group.set(this.group);
+            this.group.BIMObjects.push(newBimObject);
+          } else {
+            this.selectedGroup.group[0].BIMObjects.push(newBimObject);
+          }
         }
         // console.log(newBimObject);
       }

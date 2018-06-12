@@ -22,9 +22,22 @@
           <md-button v-on:click="referentialPanel(item, true)">
             <md-icon>location_city</md-icon>
           </md-button>
-          <md-button v-on:click="deleteTheme(item)">
-            <md-icon>delete_forever</md-icon>
+
+        <md-menu md-direction="bottom-end">
+      <md-button md-menu-trigger>
+        <md-icon>more_vert</md-icon>
+      </md-button>
+      <md-menu-content>
+          <div v-if="index == 0"> <md-icon>not_interested</md-icon>
+          Can't be delete
+          </div>
+          <md-button v-if="index != 0" v-on:click="deleteTheme(item)">
+            <md-icon>delete_forever</md-icon> Delete
           </md-button>
+      </md-menu-content>
+    </md-menu>
+      
+
         </div>
       </md-list-item>
 </md-list>
@@ -42,6 +55,7 @@ import event from "./component/event.vue";
 import addTheme from "./component/addTheme.vue";
 import colorPicker from "./component/colorPicker.vue";
 import iconEyeThemePanel from "./component/iconEyeThemePanel.vue";
+var chartsPanel = require("./component/chartsManager.js");
 
 var newList = [];
 
@@ -121,7 +135,10 @@ export default {
           } else hideOrShow.setVisible(false);
         }
     },
-    charts: function(group) {},
+    charts: function(group) {
+      let panel = chartsPanel.createPanel(group);
+      event.$emit("chartsEvent", group, panel);
+    },
     view: function() {
       console.log(this.checkedNames);
       if (this.icon === "visibility") {
