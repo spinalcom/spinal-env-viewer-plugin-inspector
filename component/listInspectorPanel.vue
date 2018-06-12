@@ -1,13 +1,13 @@
 <template>
     <md-list style="width=300px">
-      <md-list-item v-for="(spinalGroup, index) in list" :key="index" v-on:click.right="rightClickContextMenu">
+      <md-list-item v-for="(spinalGroup, index) in list" :key="index" @click="selectObjects(spinalGroup)" @dblclick="zoomObjects(spinalGroup)" >
         <div>{{ spinalGroup.name.get()}}</div>
         <div>
           <icon-inspector-panel :selectedGroup="spinalGroup"></icon-inspector-panel>
-          <md-button v-on:click="referentialPanel(spinalGroup)">
+          <md-button v-on:click.stop="referentialPanel(spinalGroup)">
             <md-icon>location_city</md-icon>
           </md-button>
-          <md-button v-on:click="themePanel(spinalGroup, icon)">
+          <md-button v-on:click.stop="themePanel(spinalGroup, icon)">
             <md-icon>assignment</md-icon>
           </md-button>
           
@@ -83,6 +83,23 @@ export default {
             hideOrShow.setTitle("referential : " + group.name.get());
           } else hideOrShow.setVisible(false);
         }
+    },
+    selectObjects: function(selectedGroup) {
+      console.log(selectedGroup);
+      let tab = [];
+      for (let i = 0; i < selectedGroup.allObject.length; i++) {
+        const element = selectedGroup.allObject[i];
+        tab.push(element.id.get());
+      }
+      viewer.select(tab);
+    },
+    zoomObjects: function(selectedGroup) {
+      let tab = [];
+      for (let i = 0; i < selectedGroup.allObject.length; i++) {
+        const element = selectedGroup.allObject[i];
+        tab.push(element.id.get());
+      }
+      viewer.fitToView(tab);
     }
   },
   mounted() {

@@ -1,6 +1,6 @@
 <template>
     <md-list>
-      <md-list-item v-for="index in list.length" :key="index">
+      <md-list-item v-for="index in list.length" :key="index" @click="selectObjects(list[index - 1])" @dblclick="zoomObjects(list[index -1])">
         <div>{{ list[index - 1].name.get()}}</div>
         <div>
           <change-group :item="list[index - 1]" :selectedgroup="selectedGroup"></change-group>
@@ -57,6 +57,14 @@ export default {
         }
       }
       console.log(item);
+    },
+    selectObjects: function(BIMObject) {
+      console.log(BIMObject);
+      viewer.select(BIMObject.id.get());
+    },
+    zoomObjects: function(BIMObject) {
+      console.log(BIMObject);
+      viewer.fitToView([BIMObject.id.get()]);
     }
   },
   mounted() {

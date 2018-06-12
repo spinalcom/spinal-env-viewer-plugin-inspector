@@ -13,13 +13,13 @@
     </md-toolbar>
 
 <md-list>
-      <md-list-item v-for="(item, index) in getNewList()" :key="index">
+      <md-list-item v-for="(item, index) in getNewList()" :key="index" @click="selectObjects(item)" @dblclick="zoomObjects(item)">
         <div>
           {{ item.name.get()}}</div>
         <div>
           <icon-eye-theme-panel :item="item" :selectedGroup="selectedGroup" :icon="icon.i"></icon-eye-theme-panel>
           <color-picker :selectedGroup="item"></color-picker>
-          <md-button v-on:click="referentialPanel(item, true)">
+          <md-button v-on:click.stop="referentialPanel(item, true)">
             <md-icon>location_city</md-icon>
           </md-button>
 
@@ -162,6 +162,24 @@ export default {
           this.selectedGroup.group.splice(i, 1);
         }
       }
+    },
+    selectObjects: function(group) {
+      console.log(group);
+      let tab = [];
+      for (let i = 0; i < group.BIMObjects.length; i++) {
+        const element = group.BIMObjects[i];
+        tab.push(element.id.get());
+      }
+      viewer.select(tab);
+    },
+    zoomObjects: function(group) {
+      console.log(group);
+      let tab = [];
+      for (let i = 0; i < group.BIMObjects.length; i++) {
+        const element = group.BIMObjects[i];
+        tab.push(element.id.get());
+      }
+      viewer.fitToView(tab);
     }
   },
   mounted() {

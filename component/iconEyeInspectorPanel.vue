@@ -1,5 +1,5 @@
 <template>
-  <md-button @click="view(selectedGroup)">
+  <md-button @click.stop="view(selectedGroup)">
     <md-icon>{{icon}}</md-icon>
     
   </md-button>
