@@ -9,7 +9,9 @@
     "author": "",
     "license": "ISC",
     "dependencies": {
-        "vue-color": "https://github.com/xiaokaike/vue-color.git"
+        "vue-color": "https://github.com/xiaokaike/vue-color.git",
+        "spinal-models-bim_forge": "https://github.com/spinalcom/spinal-models-bim_forge.git",
+        "spinal-models-bim_viewer": "https://github.com/spinalcom/spinal-models-bim_viewer.git"
     },
     "devDependencies": {
         "babel-core": "^6.0.0",
