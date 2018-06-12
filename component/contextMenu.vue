@@ -29,7 +29,7 @@ var viewer;
 import event from "./event.vue";
 import Vue from "vue";
 var chartsPanel = require("./chartsManager.js");
-var pdf = require("./CreatePdf.js");
+// var pdf = require("./CreatePdf.js");
 
 export default {
   name: "contextMenu",
@@ -52,7 +52,7 @@ export default {
     },
     pdf: function(group) {
       // cette fonction ne marche pas
-      pdf.createRapport(group);
+      // pdf.createRapport(group);
     },
     charts: function(group) {
       console.log("Charts panel called");
