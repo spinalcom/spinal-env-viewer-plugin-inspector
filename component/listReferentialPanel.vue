@@ -1,5 +1,5 @@
 <template>
-    <md-list>
+    <md-list style="width=300px">
       <md-list-item v-for="index in list.length" :key="index" @click="selectObjects(list[index - 1])" @dblclick="zoomObjects(list[index -1])">
         <div>{{ list[index - 1].name.get()}}</div>
         <div>

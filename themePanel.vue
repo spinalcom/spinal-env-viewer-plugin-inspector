@@ -12,7 +12,7 @@
           </md-button>
     </md-toolbar>
 
-<md-list>
+<md-list style="width=300px">
       <md-list-item v-for="(item, index) in getNewList()" :key="index" @click="selectObjects(item)" @dblclick="zoomObjects(item)">
         <div>
           {{ item.name.get()}}</div>

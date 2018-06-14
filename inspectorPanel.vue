@@ -106,8 +106,8 @@ export default {
       _container.style.height = "300px";
       _container.style.overflowY = "auto";
 
-      hideOrShow.container.style.minWidth = "490px";
-      hideOrShow.container.style.width = "490px";
+      hideOrShow.container.style.minWidth = "450px";
+      hideOrShow.container.style.width = "450px";
       hideOrShow.container.style.height = "300px";
       hideOrShow.container.style.minHeight = "200px";
 
