@@ -136,7 +136,9 @@ export default {
 }
 button.md-button.md-theme-default {
   min-width: 27px;
-  width: 27px;
+  width: 33px;
+  min-height: 27px;
+  height: 33px;
 }
 
 .nameStyle {
