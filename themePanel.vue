@@ -14,9 +14,9 @@
 
 <md-list style="width=300px">
       <md-list-item v-for="(item, index) in getNewList()" :key="index" @click="selectObjects(item)" @dblclick="zoomObjects(item)">
-        <div>
+        <span style="width: 200px; overflow: hidden; text-overflow: ellipsis;">
           {{ item.name.get()}}</div>
-        <div>
+        </span>
           <icon-eye-theme-panel :item="item" :selectedGroup="selectedGroup" :icon="icon.i"></icon-eye-theme-panel>
           <color-picker :selectedGroup="item"></color-picker>
           <md-button v-on:click.stop="referentialPanel(item, true)">
