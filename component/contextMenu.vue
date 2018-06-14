@@ -1,6 +1,6 @@
 <template>
     <md-menu md-direction="bottom-end">
-      <md-button md-menu-trigger>
+      <md-button @click.stop="share" md-menu-trigger>
         <md-icon>more_vert</md-icon>
       </md-button>
 
