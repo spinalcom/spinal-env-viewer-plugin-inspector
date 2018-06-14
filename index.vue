@@ -70,12 +70,15 @@ const classExtention = class {
 
   initialize() {
     var _container = document.createElement("div");
+
     _container.className = this.panel.container.id + "-pannelcontainer";
 
     _container.style.height = "calc(100% - 45px)";
     _container.style.overflowY = "auto";
     this.panel.container.appendChild(_container);
     new ComponentCtor().$mount(_container);
+
+    this.panel.container.style.minHeight = "150px";
   }
 };
 

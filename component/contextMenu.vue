@@ -1,6 +1,6 @@
 <template>
     <md-menu md-direction="bottom-end">
-      <md-button @click.stop md-menu-trigger>
+      <md-button class="md-icon-button" @click.stop md-menu-trigger>
         <md-icon>more_vert</md-icon>
       </md-button>
 
@@ -9,8 +9,7 @@
             <md-icon>border_color</md-icon>Edit name
         </md-menu-item>
 
-        <md-menu-item @click="share(selectedGroup)">
-          <md-icon>import_export</md-icon>Share</md-menu-item>
+        <md-menu-item><share :selectedGroup="selectedGroup"></share></md-menu-item>
         <md-menu-item @click="pdf(selectedGroup)">
           <md-icon>picture_as_pdf</md-icon>Export pdf</md-menu-item>
         <md-menu-item @click="charts(selectedGroup)">
@@ -28,6 +27,7 @@ var viewer;
 
 import event from "./event.vue";
 import Vue from "vue";
+import share from "./share.vue";
 var chartsPanel = require("./chartsManager.js");
 var pdf = require("./CreatePdf.js");
 
@@ -40,6 +40,9 @@ export default {
       value: "",
       test: true
     };
+  },
+  components: {
+    share
   },
   props: ["selectedGroup", "tabPanel"],
   methods: {

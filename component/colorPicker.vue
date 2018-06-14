@@ -1,11 +1,11 @@
 <template>
   <md-menu md-direction="bottom-end" :md-close-on-select="false">
-      <md-button md-menu-trigger  :style="getColor()">
+      <md-button style="width: 40px; height: 20px; margin-top: 10px;" md-menu-trigger  :style="getColor()">
       </md-button>
-    <md-menu-content>
-        <md-menu-item @click="vierge">
+    <md-menu-content >
+        <div  @click.stop="vierge">
           <chrome-picker v-model="colors"></chrome-picker>
-        </md-menu-item>
+        </div>
     </md-menu-content>
   </md-menu>
 </template>

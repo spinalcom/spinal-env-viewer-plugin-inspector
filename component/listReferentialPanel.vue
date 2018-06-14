@@ -1,20 +1,25 @@
 <template>
     <md-list style="width=300px">
-      <md-list-item v-for="index in list.length" :key="index" @click="selectObjects(list[index - 1])" @dblclick="zoomObjects(list[index -1])" style="width=300px">
-        <span style="width: 200px; overflow: hidden;text-overflow: ellipsis;">{{ list[index - 1].name.get()}}</span>
-        <div>
+      <md-list-item v-for="index in list.length" :key="index" @click="selectObjects(list[index - 1])" @dblclick="zoomObjects(list[index -1])" style="width=300px;">
+        <span class="nameStyle" >{{ list[index - 1].name.get()}}
+          <md-tooltip>{{ list[index - 1].name.get()}}</md-tooltip>
+        </span>
+        
           <change-group :item="list[index - 1]" :selectedgroup="selectedGroup"></change-group>
 
-              <md-menu md-direction="bottom-end">
-      <md-button @click.stop md-menu-trigger>
+    <md-menu md-direction="bottom-end">
+      <md-button class="md-icon-button" @click.stop md-menu-trigger>
         <md-icon>more_vert</md-icon>
       </md-button>
       <md-menu-content>
+        <md-menu-item  @click="rename(list[index - 1])">
+            <md-icon>border_color</md-icon>Edit name
+        </md-menu-item>
         <md-menu-item @click="deleteBIMObject(list[index - 1])">
           <md-icon>delete_forever</md-icon>Delete</md-menu-item>
       </md-menu-content>
     </md-menu>
-        </div>
+        
       </md-list-item>
     </md-list>
 </template>
@@ -24,7 +29,8 @@
 var spinalSystem;
 var viewer;
 
-import changeGroup from "./changeGroupBIMObject.vue";
+import changeGroup from "./changeGroup.vue";
+import event from "./event.vue";
 
 export default {
   name: "addGroup",
@@ -61,6 +67,10 @@ export default {
     selectObjects: function(BIMObject) {
       console.log(BIMObject);
       viewer.select(BIMObject.id.get());
+    },
+    rename: function(group) {
+      console.log("rename");
+      event.$emit("renameGroup", group);
     },
     zoomObjects: function(BIMObject) {
       console.log(BIMObject);

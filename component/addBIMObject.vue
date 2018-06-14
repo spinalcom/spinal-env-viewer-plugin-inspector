@@ -1,5 +1,5 @@
 <template>
-          <md-button @click="addItem()">
+          <md-button class="md-icon-button" @click="addItem()">
             <md-icon>add</md-icon>
           </md-button>
 </template>

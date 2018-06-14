@@ -4,36 +4,43 @@
 
           <icon-eye-theme-panel :selectedGroup="selectedGroup" :icon="icon.i"></icon-eye-theme-panel>
           <addTheme :selectedGroup="selectedGroup"></addTheme>
-          <md-button v-on:click="referentialPanel(selectedGroup, false)">
+          <md-button class="md-icon-button" v-on:click="referentialPanel(selectedGroup, false)">
             <md-icon>location_city</md-icon>
           </md-button>
-          <md-button @click="charts(selectedGroup)">
+          <md-button class="md-icon-button" @click="charts(selectedGroup)">
             <md-icon>insert_chart</md-icon>
           </md-button>
     </md-toolbar>
 
-<md-list style="width=300px">
+<md-list style="width=300px" >
       <md-list-item v-for="(item, index) in getNewList()" :key="index" @click="selectObjects(item)" @dblclick="zoomObjects(item)">
-        <span style="width: 100px; overflow: hidden; text-overflow: ellipsis;">
-          {{ item.name.get()}}</div>
+        <div class="nameStyle">
+        <span>
+          <md-tooltip>{{ item.name.get()}}</md-tooltip>
+          {{ item.name.get()}}
         </span>
+        </div>
+        <div>
           <icon-eye-theme-panel :item="item" :selectedGroup="selectedGroup" :icon="icon.i"></icon-eye-theme-panel>
           <color-picker :selectedGroup="item"></color-picker>
-          <md-button v-on:click.stop="referentialPanel(item, true)">
+          <md-button class="md-icon-button" v-on:click.stop="referentialPanel(item, true)">
             <md-icon>location_city</md-icon>
           </md-button>
 
         <md-menu md-direction="bottom-end">
-      <md-button @click.stop md-menu-trigger>
+      <md-button class="md-icon-button" @click.stop md-menu-trigger>
         <md-icon>more_vert</md-icon>
       </md-button>
       <md-menu-content>
-          <div v-if="index == 0"> <md-icon>not_interested</md-icon>
+        <md-menu-item v-if="index == 0"> <md-icon>not_interested</md-icon>
           Can't be delete
-          </div>
-          <md-button v-if="index != 0" v-on:click="deleteTheme(item)">
+        </md-menu-item>
+        <md-menu-item  @click="rename(item)">
+            <md-icon>border_color</md-icon>Edit name
+        </md-menu-item>
+          <md-menu-item v-if="index != 0" v-on:click="deleteTheme(item)">
             <md-icon>delete_forever</md-icon> Delete
-          </md-button>
+          </md-menu-item>
       </md-menu-content>
     </md-menu>
       
@@ -146,6 +153,10 @@ export default {
       } else {
         this.icon = "visibility";
       }
+    },
+    rename: function(group) {
+      console.log("rename");
+      event.$emit("renameGroup", group);
     },
     deleteTheme: function(group) {
       for (let i = 0; i < this.selectedGroup.group.length; i++) {

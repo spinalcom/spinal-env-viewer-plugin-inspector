@@ -90,11 +90,11 @@ export default {
       _container.className = hideOrShow.container.id + "-pannelcontainer";
       _container.style.height = "calc(100% - 45px)";
       _container.style.overflowY = "auto";
-      hideOrShow.container.style.minWidth = "480px";
-      hideOrShow.container.style.width = "480px";
+      hideOrShow.container.style.minWidth = "300px";
+      hideOrShow.container.style.width = "350px";
       hideOrShow.container.style.height = "300px";
       hideOrShow.container.style.minHeight = "200px";
-      hideOrShow.container.style.right = "0px";
+      hideOrShow.container.style.left = "calc(100vw - 481px)";
       hideOrShow.container.appendChild(_container);
       new themeComponentCtor().$mount(_container);
       this.tabPanel.push(hideOrShow);
@@ -106,8 +106,8 @@ export default {
       _container.style.height = "300px";
       _container.style.overflowY = "auto";
 
-      hideOrShow.container.style.minWidth = "450px";
-      hideOrShow.container.style.width = "450px";
+      hideOrShow.container.style.minWidth = "300px";
+      hideOrShow.container.style.width = "350px";
       hideOrShow.container.style.height = "300px";
       hideOrShow.container.style.minHeight = "200px";
 
@@ -125,5 +125,31 @@ export default {
   height: calc(100% - 48px);
   overflow-y: auto;
   box-sizing: border-box;
+}
+
+.md-ripple.md-list-item-content {
+  box-sizing: border-box;
+  min-height: 20px;
+  height: 36px;
+  font-size: 14px;
+  border-bottom: 1px solid #212121;
+}
+button.md-button.md-theme-default {
+  min-width: 27px;
+  width: 27px;
+}
+
+.nameStyle {
+  width: 150px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.container * {
+  box-sizing: border-box;
+}
+
+i.md-icon.md-icon-font.md-theme-default {
+  font-size: 18px !important;
 }
 </style>

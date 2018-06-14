@@ -1,19 +1,19 @@
 <template>
   <md-content class="container md-scrollbar">
     <md-toolbar style="box-sizing: border-box;">
-          <md-button v-if="group != selectedGroup" @click="referentialPanel()">
+          <md-button class="md-icon-button" v-if="group != selectedGroup" @click="referentialPanel()">
             <md-icon>location_city</md-icon>
           </md-button>
           
           <add-b-i-m-object :selectedGroup="group" :referential="referential" :group="selectedGroup"></add-b-i-m-object>      
 
-          <md-button @click="chart(group)">
+          <md-button class="md-icon-button" @click="chart(group)">
             <md-icon>insert_chart</md-icon>
           </md-button>
-          <md-button @click="restoreRef()">
+          <md-button class="md-icon-button" @click="restoreRef()">
             <md-icon>clear</md-icon>
           </md-button>
-          <md-button @click="onConfirm()">
+          <md-button class="md-icon-button" @click="onConfirm()">
             <md-icon>delete_sweep</md-icon>
           </md-button>
         <md-dialog-confirm
