@@ -6,7 +6,7 @@
           <change-group :item="list[index - 1]" :selectedgroup="selectedGroup"></change-group>
 
               <md-menu md-direction="bottom-end">
-      <md-button md-menu-trigger>
+      <md-button @click.stop md-menu-trigger>
         <md-icon>more_vert</md-icon>
       </md-button>
       <md-menu-content>
