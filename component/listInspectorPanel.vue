@@ -1,11 +1,11 @@
 <template>
     <md-list style="width=300px">
       <md-list-item style="height=30px" v-for="(spinalGroup, index) in list" :key="index" @click="selectObjects(spinalGroup)" @dblclick="zoomObjects(spinalGroup)" >
-        <div class="nameStyle">
+        <div class="md-list-item-text">
           <span>{{ spinalGroup.name.get()}}</span>  
           <md-tooltip>{{ spinalGroup.name.get()}}</md-tooltip>
         </div>
-        <div>
+        
           <icon-inspector-panel :selectedGroup="spinalGroup"></icon-inspector-panel>
           <md-button class="md-icon-button" v-on:click.stop="referentialPanel(spinalGroup)">
             <md-icon class="md-size-1x">location_city</md-icon>
@@ -15,7 +15,7 @@
           </md-button>
           
            <contextMenu :selectedGroup="spinalGroup" :tabPanel="tabPanel"></contextMenu>
-        </div>
+        
       </md-list-item>
     </md-list>
 </template>
