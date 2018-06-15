@@ -1,5 +1,5 @@
 <template>
-  <md-content class="container md-scrollbar">
+  <md-content class="container-inspector md-scrollbar">
     <md-toolbar style="box-sizing: border-box;">
 
           <icon-eye-theme-panel :selectedGroup="selectedGroup" :icon="icon.i"></icon-eye-theme-panel>
@@ -14,7 +14,7 @@
 
 <md-list style="width=300px" >
       <md-list-item v-for="(item, index) in getNewList()" :key="index" @click="selectObjects(item)" @dblclick="zoomObjects(item)">
-        <div class="nameStyle">
+        <div class="md-list-item-text">
         <span>
           <md-tooltip>{{ item.name.get()}}</md-tooltip>
           {{ item.name.get()}}

@@ -1,6 +1,6 @@
 <template>
     <md-list style="width=300px">
-      <md-list-item style="height=30px" v-for="(spinalGroup, index) in list" :key="index" @click="selectObjects(spinalGroup)" @dblclick="zoomObjects(spinalGroup)" >
+      <md-list-item class="smallList" style="height=30px" v-for="(spinalGroup, index) in list" :key="index" @click="selectObjects(spinalGroup)" @dblclick="zoomObjects(spinalGroup)" >
         <div class="md-list-item-text">
           <span>{{ spinalGroup.name.get()}}</span>  
           <md-tooltip>{{ spinalGroup.name.get()}}</md-tooltip>

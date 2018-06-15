@@ -1,6 +1,6 @@
 <template>
-    <md-menu md-direction="bottom-end" :style="getColor()" style="width: 40px; height: 20px;">
-      <md-button style="width: 40px; height: 20px;" md-menu-trigger>
+    <md-menu md-direction="bottom-end" :style="getColor()" style="width: 40px; height: 20px; border-radius: 3px;">
+      <md-button style="width: 40px; height: 20px; border-radius: 3px;" md-menu-trigger>
       </md-button>
     <md-menu-content>
         <md-menu-item v-for="(group, index) in onModelChange()" :key="index" v-on:click="changeGroup(group)">

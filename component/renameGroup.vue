@@ -1,5 +1,5 @@
 <template>
-  <md-content class="container md-scrollbar">
+  <md-content >
         <md-dialog-prompt
                       :md-active.sync="active"
                       v-model="value"

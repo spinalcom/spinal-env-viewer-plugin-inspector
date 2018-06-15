@@ -23,33 +23,20 @@ var group = class group extends Model {
 exports.group = group;
 spinalCore.register_models(group);
 
-// var theme = class theme extends Model {
-//     constructor(name = "theme", color = '#008000', allObject = []) {
-//         super();
+var apps = class apps extends Model {
+    constructor(name = "apps") {
+        super();
 
-//         this.add_attr({
-//             id: 1,
-//             name: name,
-//             display: true,
-//             color: color,
-//             allObject: allObject,
-//         });
-//     }
-// };
-// exports.theme = theme;
-// spinalCore.register_models(theme);
+        this.add_attr({
+            name: name,
+            type: "",
+            username: '',
+            owner: '',
+            create: Date.now(),
+            inspector: [],
+        });
+    }
+};
 
-// var bimObject = class bimObject extends Model {
-//     constructor(name = "group") {
-//         super();
-//         this.add_attr({
-//             dbId: 0,
-//             name: '',
-//             display: true,
-//             group: [],
-//             properties: [],
-//         });
-//     }
-// };
-// exports.bimObject = bimObject;
-// spinalCore.register_models(bimObject);
+exports.apps = apps;
+spinalCore.register_models(apps);

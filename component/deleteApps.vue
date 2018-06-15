@@ -1,4 +1,16 @@
 <template>
+<div>
+<md-menu md-direction="bottom-end">
+      <md-button class="md-icon-button" @click.stop md-menu-trigger>
+        <md-icon>more_vert</md-icon>
+      </md-button>
+      <md-menu-content>
+          <md-menu-item @click="active = true">
+          <md-icon>delete_forever</md-icon>
+          Delete
+          </md-menu-item>
+      </md-menu-content>
+</md-menu>
   <md-content>
         <md-dialog-confirm
       :md-active.sync="active"
@@ -6,8 +18,8 @@
       md-confirm-text="Agree"
       md-cancel-text="Disagree"
       @md-confirm="onConfirm" />
-              
   </md-content>
+</div>
 </template>
 
 
@@ -21,22 +33,15 @@ export default {
 
   data() {
     return {
-      active: false,
-      selectedGroup: null
+      active: false
     };
   },
-  props: ["inspector"],
+  props: ["collaborator", "selectedApp"],
   methods: {
-    getEvent: function() {
-      event.$on("deleteGroup", selectedGroup => {
-        this.selectedGroup = selectedGroup;
-        this.active = true;
-      });
-    },
     onConfirm: function() {
-      for (let i = 0; i < this.inspector.length; i++) {
-        if (this.inspector[i].name === this.selectedGroup.name)
-          this.inspector.splice(i, 1);
+      for (let i = 0; i < this.collaborator.length; i++) {
+        if (this.collaborator[i] === this.selectedApp)
+          this.collaborator.splice(i, 1);
       }
       this.active = false;
     }
@@ -44,7 +49,6 @@ export default {
   mounted() {
     viewer = window.spinal.ForgeViewer.viewer;
     spinalSystem = window.spinal.spinalSystem;
-    this.getEvent();
   }
 };
 </script>

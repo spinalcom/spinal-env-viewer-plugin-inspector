@@ -1,8 +1,8 @@
 
 <script>
 import Vue from "vue";
-import inspector from "./inspectorPanel.vue";
-const ComponentCtor = Vue.extend(inspector);
+import collaborator from "./collaborator.vue";
+const ComponentCtor = Vue.extend(collaborator);
 
 const ClassName = "inspector";
 const PanelTitle = "Inspector";
@@ -57,9 +57,9 @@ const classExtention = class {
     icon.className = "adsk-button-icon md-icon md-icon-font md-theme-default";
     icon.innerHTML = ButtonIcon;
     button1.setToolTip(ButtonLabel);
-    button1.addClass("spinalColorButton");
 
     this.subToolbar = this.viewer.toolbar.getControl("spinalcom");
+    this.subToolbar.addClass("spinalColorButton");
     if (!this.subToolbar) {
       this.subToolbar = new Autodesk.Viewing.UI.ControlGroup("spinalcom");
       this.viewer.toolbar.addControl(this.subToolbar);

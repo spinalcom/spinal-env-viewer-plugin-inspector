@@ -1,5 +1,5 @@
 <template>
-  <md-content class="container md-scrollbar">
+  <md-content class="container-inspector md-scrollbar">
     <md-toolbar style="box-sizing: border-box;">
           <md-button class="md-icon-button" v-if="group != selectedGroup" @click="referentialPanel()">
             <md-icon>location_city</md-icon>

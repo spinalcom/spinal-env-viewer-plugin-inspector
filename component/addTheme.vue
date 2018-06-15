@@ -1,5 +1,5 @@
 <template>
-  <md-content class="container md-scrollbar" style="height: unset;">
+  <div>
            <md-dialog-prompt
                       :md-active.sync="active"
                       v-model="value"
@@ -8,10 +8,10 @@
                       md-input-placeholder="Type your name..."
                       md-confirm-text="Done"
                       @md-confirm="addGroup" />
-  <md-toolbar style="box-sizing: border-box;">
+  
     <md-button class="md-icon-button" @click="active = true"><md-icon>add_box</md-icon></md-button>
-    </md-toolbar>
-  </md-content>
+    
+  </div>
 </template>
 
 

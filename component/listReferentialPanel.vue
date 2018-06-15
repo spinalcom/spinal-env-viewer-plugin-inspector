@@ -1,7 +1,7 @@
 <template>
     <md-list style="width=300px">
       <md-list-item v-for="index in list.length" :key="index" @click="selectObjects(list[index - 1])" @dblclick="zoomObjects(list[index -1])" style="width=300px;">
-        <span class="nameStyle" >{{ list[index - 1].name.get()}}
+        <span class="md-list-item-text" >{{ list[index - 1].name.get()}}
           <md-tooltip>{{ list[index - 1].name.get()}}</md-tooltip>
         </span>
         

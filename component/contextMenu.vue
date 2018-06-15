@@ -9,9 +9,9 @@
             <md-icon>border_color</md-icon>Edit name
         </md-menu-item>
 
-        <md-menu-item><share :selectedGroup="selectedGroup"></share></md-menu-item>
+        <!-- <md-menu-item><share :selectedGroup="selectedGroup"></share></md-menu-item>
         <md-menu-item @click="pdf(selectedGroup)">
-          <md-icon>picture_as_pdf</md-icon>Export pdf</md-menu-item>
+          <md-icon>picture_as_pdf</md-icon>Export pdf</md-menu-item> -->
         <md-menu-item @click="charts(selectedGroup)">
           <md-icon>insert_chart</md-icon>Charts</md-menu-item>
         <md-menu-item @click="deleteGroup(selectedGroup)">
