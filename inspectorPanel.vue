@@ -9,7 +9,7 @@
     <color-b-i-m-object></color-b-i-m-object>
 
     <list-inspector-panel :list="onModelChange()" :tabPanel="tabPanel"></list-inspector-panel>
-    <rename></rename>
+    
     <deleteGroup :inspector="inspector"></deleteGroup>
   </md-content>
 </template>
@@ -21,7 +21,6 @@ import Vue from "vue";
 
 import addGroup from "./component/addGroup.vue";
 import listInspectorPanel from "./component/listInspectorPanel.vue";
-import rename from "./component/renameGroup.vue";
 import deleteGroup from "./component/deleteGroup.vue";
 import colorBIMObject from "./component/colorBIMObject.vue";
 import event from "./component/event.vue";
@@ -38,7 +37,6 @@ export default {
     colorBIMObject,
     addGroup,
     listInspectorPanel,
-    rename,
     deleteGroup
   },
   props: ["inspector", "tabPanel"],

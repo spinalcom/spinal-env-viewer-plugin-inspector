@@ -2,6 +2,8 @@
   <md-content class="container-inspector md-scrollbar">
     <apps v-if="activeApp == false" :collaborator="collaborator"></apps>
     <inspector-panel :tab-panel="tabPanel" :inspector="inspector" v-if="activeApp == true"></inspector-panel>
+
+    <rename></rename>
   </md-content>
 </template>
 
@@ -12,11 +14,15 @@ var viewer;
 import Vue from "vue";
 import inspectorPanel from "./inspectorPanel.vue";
 import apps from "./component/apps.vue";
+import rename from "./component/renameGroup.vue";
 import event from "./component/event.vue";
+
 import referentialPanel from "./referentialPanel.vue";
 import themePanel from "./themePanel.vue";
+import commentsPanel from "./commentairePanel.vue";
 const refComponentCtor = Vue.extend(referentialPanel);
 const themeComponentCtor = Vue.extend(themePanel);
+const commentsComponentCtor = Vue.extend(commentsPanel);
 
 export default {
   name: "newFile",
@@ -31,7 +37,8 @@ export default {
   },
   components: {
     inspectorPanel,
-    apps
+    apps,
+    rename
   },
   props: [],
   methods: {
@@ -73,12 +80,16 @@ export default {
 
     var check = false;
     var check2 = false;
+    var check3 = false;
     for (let i = 0; i < this.tabPanel.length; i++) {
       if (this.tabPanel[i].titleLabel.indexOf("theme: ") > -1) {
         check = true;
-      }
-      if (this.tabPanel[i].titleLabel.indexOf("referential: ") > -1) {
-        check2 = true;
+      } else {
+        if (this.tabPanel[i].titleLabel.indexOf("referential: ") > -1) {
+          check2 = true;
+        } else if (this.tabPanel[i].titleLabel.indexOf("comments: ") > -1) {
+          check3 = true;
+        }
       }
     }
     if (!check) {
@@ -112,6 +123,23 @@ export default {
       hideOrShow.container.appendChild(_container);
       new refComponentCtor().$mount(_container);
       this.tabPanel.push(hideOrShow);
+    }
+    if (!check3) {
+      let hideOrShow = new PanelClass(viewer, "comments :");
+      var _container = document.createElement("div");
+      _container.className = hideOrShow.container.id + "-pannelcontainer";
+      _container.style.height = "300px";
+      _container.style.overflowY = "auto";
+
+      hideOrShow.container.style.minWidth = "300px";
+      hideOrShow.container.style.width = "350px";
+      hideOrShow.container.style.height = "300px";
+      hideOrShow.container.style.minHeight = "200px";
+
+      hideOrShow.container.style.left = "40%";
+      hideOrShow.container.appendChild(_container);
+      new commentsComponentCtor().$mount(_container);
+      event.$emit("createCommentsPanel", hideOrShow);
     }
   }
 };

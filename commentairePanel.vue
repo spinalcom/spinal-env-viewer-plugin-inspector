@@ -1,0 +1,199 @@
+<template>
+  <div id="app" style=" box-sizing: border-box; height: calc(100% - 50px)">
+
+
+<!-- <md-content class="md-layout md-gutter md-alignment-center md-scrollbar" style="box-sizing: border-box; overflow-y:auto; height: calc(75% - 50px)">
+        <md-card class="md-layout-item md-size-30" style=" box-sizing: border-box; min-width: 200px" v-for="(comment, index) in onModelChange()" :key="index">
+      <md-card-header>
+        <md-card-header-text>
+          <div class="md-title">{{comment.username.get()}}</div>
+          <div class="md-subhead">{{toDate(comment.date.get())}}</div>
+        </md-card-header-text>
+      </md-card-header>
+
+      <md-card-content class="words">
+        {{ comment.message.get()}}
+      </md-card-content>
+
+<md-card-expand>
+          <md-card-actions md-alignment="space-between">
+   <md-card-expand-trigger>
+            <md-button class="md-icon-button">
+              <md-icon>keyboard_arrow_down</md-icon>
+            </md-button>
+          </md-card-expand-trigger>
+</md-card-actions>
+
+    <md-card-expand-content>
+      <md-card-content >
+        {{ comment.message.get()}}
+      </md-card-content>
+    </md-card-expand-content>
+      </md-card-expand>
+    </md-card>
+</md-content> -->
+<md-content id="myList" class="md-scrollbar" style="box-sizing: border-box; overflow-y:auto; height: calc(75% - 20px)">
+  <md-list>
+    <md-list-item style="border-bottom: 1px solid grey; margin-top: 7px" v-for="(comment, index) in onModelChange()" :key="index">
+      
+      <div class="md-list-item-text">
+      <div>
+        <span style="font-size: 15px;">{{comment.username.get()}}</span>
+        <span style="font-size: 10px;"> {{toDate(comment.date.get())}}</span>
+      </div>
+      <span :style="getStyle(comment)"> {{ comment.message.get()}} </span>      
+      </div>
+      <!-- <md-button style="position: absolut; top: 0px; right: 0px; font-size: 10px;" class="md-icon-button">
+          <md-icon>edit</md-icon>
+        </md-button> -->
+    </md-list-item>
+  </md-list>
+
+<!-- <div :style="getStyle(comment)" v-for="(comment, index) in onModelChange()" :key="index">
+  <div>{{ comment.message.get()}}</div>
+    <div>{{comment.username.get()}}</div>
+  <div>{{toDate(comment.date.get())}}</div>
+</div> -->
+</md-content>
+
+<md-field style="width: calc(100% - 5px); height: calc(15% - 20px); margin:unset">
+      <label>Textarea</label>
+      <md-textarea class="md-scrollbar" style="width: 100%; min-height: calc(100% - 10px); resize:unset; margin-top: 10px; padding-top: unset" v-model="message"></md-textarea>
+    </md-field>
+
+    <md-button style="margin: unset" @click.stop="addComments">
+      <md-icon>send</md-icon> Send
+    </md-button>
+  </div>
+</template>
+
+
+<script>
+var spinalSystem;
+var viewer;
+import event from "./component/event.vue";
+import { message } from "./model/model";
+var moment = require("moment");
+
+export default {
+  name: "newFile",
+  data() {
+    return {
+      currentPanel: {
+        selectedObject: {},
+        panel: {}
+      },
+      message: ""
+    };
+  },
+
+  components: {},
+  props: [],
+  methods: {
+    getEvent: function() {
+      event.$on("createCommentsPanel", panel => {
+        console.log("le panel commentaire a été créer");
+        this.currentPanel.panel = panel;
+      });
+      event.$on("openCommentsPanel", selectedObject => {
+        console.log(selectedObject);
+        if (this.currentPanel.selectedObject === selectedObject) {
+          if (this.currentPanel.panel.isVisible()) {
+            this.currentPanel.panel.setVisible(false);
+          } else this.currentPanel.panel.setVisible(true);
+        } else {
+          this.currentPanel.selectedObject = selectedObject;
+          this.currentPanel.panel.setTitle(
+            "comments: " + selectedObject.name.get()
+          );
+          if (!this.currentPanel.panel.isVisible()) {
+            this.currentPanel.panel.setVisible(true);
+          }
+        }
+      });
+    },
+    onModelChange: function() {
+      var tab = [];
+      if (this.currentPanel.selectedObject.note) {
+        for (let i = 0; i < this.currentPanel.selectedObject.note.length; i++) {
+          const element = this.currentPanel.selectedObject.note[i];
+          tab.push(element);
+        }
+      }
+      return tab;
+    },
+    toDate: function(date) {
+      let newDateFormat = moment(date);
+      let newDateFormat2 = moment();
+      newDateFormat2.subtract(1, "days");
+      if (newDateFormat.isBefore(newDateFormat2)) {
+        return newDateFormat.format("L , LT");
+      } else return newDateFormat.fromNow();
+      // "DD MM YY, HH:mm:ss a"
+      // return convert.toLocaleDateString("fr-fr", { timeZone: "UTC" });
+    },
+    addComments: function() {
+      console.log(this.message);
+      let user = spinalSystem.getUser();
+      var newMess = new message();
+      newMess.username.set(user.username);
+      newMess.owner.set(user.id);
+      newMess.message.set(this.message);
+      this.currentPanel.selectedObject.note.push(newMess);
+
+      var container = this.$el.querySelector("#myList");
+      container.scrollTop = container.scrollHeight;
+    },
+    removeMessage: function(comment) {
+      console.log(comment);
+    },
+    getStyle: function(comment) {
+      var myStyle = {
+        border: "",
+        "padding-top": "3%",
+        "padding-left": "3%",
+        "padding-bottom": "3%",
+        "border-radius": "10px",
+        "white-space": "nowrap",
+        overflow: "hidden",
+        "white-space": "initial"
+      };
+      // if (comment.username.get() === spinalSystem.getUser().username) {
+      //   // myStyle.border = "1px solid blue";
+      //   myStyle.right = "0";
+      // } else {
+      //   myStyle.border = "1px solid red";
+      //   myStyle.left = "0";
+      // }
+      return myStyle;
+    }
+  },
+  updated() {
+    var container = this.$el.querySelector("#myList");
+    container.scrollTop = container.scrollHeight;
+  },
+  mounted() {
+    viewer = window.spinal.ForgeViewer.viewer;
+    spinalSystem = window.spinal.spinalSystem;
+    // console.log(this.inspector);
+    this.getEvent();
+  }
+};
+</script>
+
+<style lang="scss" scoped>
+.md-card {
+  width: 200px;
+  // height: 150px;
+  margin: 4px;
+  display: inline-block;
+  vertical-align: top;
+  // background: blue;
+}
+
+.words {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+</style>

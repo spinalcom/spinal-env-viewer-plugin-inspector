@@ -40,3 +40,20 @@ var apps = class apps extends Model {
 
 exports.apps = apps;
 spinalCore.register_models(apps);
+
+
+var message = class message extends Model {
+    constructor(name = "message") {
+        super();
+
+        this.add_attr({
+            username: "",
+            owner: "",
+            date: Date.now(),
+            message: "",
+        });
+    }
+};
+
+exports.message = message;
+spinalCore.register_models(message);

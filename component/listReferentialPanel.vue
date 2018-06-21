@@ -12,6 +12,7 @@
         <md-icon>more_vert</md-icon>
       </md-button>
       <md-menu-content>
+        <commentaire :selected-object="list[index - 1]"></commentaire>
         <md-menu-item  @click="rename(list[index - 1])">
             <md-icon>border_color</md-icon>Edit name
         </md-menu-item>
@@ -31,6 +32,7 @@ var viewer;
 
 import changeGroup from "./changeGroup.vue";
 import event from "./event.vue";
+import commentaire from "./commentaire.vue";
 
 export default {
   name: "addGroup",
@@ -41,7 +43,8 @@ export default {
     };
   },
   components: {
-    changeGroup
+    changeGroup,
+    commentaire
   },
   props: ["list", "selectedGroup"],
   methods: {

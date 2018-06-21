@@ -12,6 +12,8 @@
         <!-- <md-menu-item><share :selectedGroup="selectedGroup"></share></md-menu-item>
         <md-menu-item @click="pdf(selectedGroup)">
           <md-icon>picture_as_pdf</md-icon>Export pdf</md-menu-item> -->
+            <commentaire :selected-object="selectedGroup"> </commentaire>
+          
         <md-menu-item @click="charts(selectedGroup)">
           <md-icon>insert_chart</md-icon>Charts</md-menu-item>
         <md-menu-item @click="deleteGroup(selectedGroup)">
@@ -28,6 +30,8 @@ var viewer;
 import event from "./event.vue";
 import Vue from "vue";
 import share from "./share.vue";
+import commentaire from "./commentaire.vue";
+
 var chartsPanel = require("./chartsManager.js");
 var pdf = require("./CreatePdf.js");
 
@@ -42,7 +46,8 @@ export default {
     };
   },
   components: {
-    share
+    share,
+    commentaire
   },
   props: ["selectedGroup", "tabPanel"],
   methods: {

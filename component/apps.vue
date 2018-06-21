@@ -4,13 +4,13 @@
 
 
     <md-list style="width=300px">
-      <md-list-item class="smallList" v-for="(app, index) in onModelChange()" :key="index" @click="select(app)" >
+      <md-list-item v-for="(app, index) in onModelChange()" :key="index" @click="select(app)" >
         <div class="md-list-item-text">
           <span>{{ app.name.get()}}</span>
           <md-tooltip>{{ app.name.get()}}</md-tooltip>
         </div>
 
-        <delete-apps :collaborator="collaborator" :selected-app="app"></delete-apps>
+        <context-menu-apps :collaborator="collaborator" :selected-app="app"></context-menu-apps>
       </md-list-item>
     </md-list>
 
@@ -24,7 +24,7 @@ var spinalSystem;
 var viewer;
 import addApps from "./addApps.vue";
 import event from "./event.vue";
-import deleteApps from "./deleteApps.vue";
+import contextMenuApps from "./contextMenuApps.vue";
 
 export default {
   name: "newFile",
@@ -32,7 +32,7 @@ export default {
   data() {
     return {};
   },
-  components: { addApps, deleteApps },
+  components: { addApps, contextMenuApps },
   props: ["collaborator"],
   methods: {
     onModelChange: function() {

@@ -35,6 +35,8 @@
         <md-menu-item v-if="index == 0"> <md-icon>not_interested</md-icon>
           Can't be delete
         </md-menu-item>
+        <commentaire :selected-object="item"></commentaire>
+           
         <md-menu-item  @click="rename(item)">
             <md-icon>border_color</md-icon>Edit name
         </md-menu-item>
@@ -62,6 +64,8 @@ import event from "./component/event.vue";
 import addTheme from "./component/addTheme.vue";
 import colorPicker from "./component/colorPicker.vue";
 import iconEyeThemePanel from "./component/iconEyeThemePanel.vue";
+import commentaire from "./component/commentaire.vue";
+
 var chartsPanel = require("./component/chartsManager.js");
 
 var newList = [];
@@ -83,7 +87,8 @@ export default {
   components: {
     addTheme,
     colorPicker,
-    iconEyeThemePanel
+    iconEyeThemePanel,
+    commentaire
   },
   props: ["inspector"],
   methods: {

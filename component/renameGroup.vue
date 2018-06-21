@@ -28,7 +28,7 @@ export default {
       value: ""
     };
   },
-  props: ["inspector"],
+  props: [],
   methods: {
     getEvent: function() {
       event.$on("renameGroup", selectedGroup => {
@@ -46,7 +46,6 @@ export default {
     viewer = window.spinal.ForgeViewer.viewer;
     spinalSystem = window.spinal.spinalSystem;
     this.getEvent();
-    // console.log(this.inspector);
   }
 };
 </script>

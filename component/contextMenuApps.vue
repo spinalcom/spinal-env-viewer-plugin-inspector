@@ -5,10 +5,18 @@
         <md-icon>more_vert</md-icon>
       </md-button>
       <md-menu-content>
-          <md-menu-item @click="active = true">
-          <md-icon>delete_forever</md-icon>
-          Delete
+          <md-menu-item  @click="rename(selectedApp)">
+            <md-icon>border_color</md-icon>Edit name
           </md-menu-item>
+          
+          
+            <commentaire :selected-object="selectedApp"> </commentaire>
+         
+
+          <md-menu-item @click="active = true">
+            <md-icon>delete_forever</md-icon>Delete
+          </md-menu-item>
+
       </md-menu-content>
 </md-menu>
   <md-content>
@@ -28,6 +36,8 @@ var spinalSystem;
 var viewer;
 
 import event from "./event.vue";
+import commentaire from "./commentaire.vue";
+
 export default {
   name: "addGroup",
 
@@ -36,6 +46,7 @@ export default {
       active: false
     };
   },
+  components: { commentaire },
   props: ["collaborator", "selectedApp"],
   methods: {
     onConfirm: function() {
@@ -44,6 +55,10 @@ export default {
           this.collaborator.splice(i, 1);
       }
       this.active = false;
+    },
+    rename: function(group) {
+      console.log("rename");
+      event.$emit("renameGroup", group);
     }
   },
   mounted() {
