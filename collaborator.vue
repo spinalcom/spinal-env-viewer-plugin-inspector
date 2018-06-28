@@ -20,9 +20,13 @@ import event from "./component/event.vue";
 import referentialPanel from "./referentialPanel.vue";
 import themePanel from "./themePanel.vue";
 import commentsPanel from "./commentairePanel.vue";
+import filesPanel from "./FilesPanel.vue";
+import linkPanel from "./linkPanel.vue";
 const refComponentCtor = Vue.extend(referentialPanel);
 const themeComponentCtor = Vue.extend(themePanel);
 const commentsComponentCtor = Vue.extend(commentsPanel);
+const filesComponentCtor = Vue.extend(filesPanel);
+const linkComponentCtor = Vue.extend(linkPanel);
 
 export default {
   name: "newFile",
@@ -81,19 +85,23 @@ export default {
     var check = false;
     var check2 = false;
     var check3 = false;
+    var check4 = false;
+    var check5 = false;
     for (let i = 0; i < this.tabPanel.length; i++) {
-      if (this.tabPanel[i].titleLabel.indexOf("theme: ") > -1) {
+      if (this.tabPanel[i].titleLabel.indexOf("Inspector :") > -1) {
         check = true;
-      } else {
-        if (this.tabPanel[i].titleLabel.indexOf("referential: ") > -1) {
-          check2 = true;
-        } else if (this.tabPanel[i].titleLabel.indexOf("comments: ") > -1) {
-          check3 = true;
-        }
+      } else if (this.tabPanel[i].titleLabel.indexOf("referential :") > -1) {
+        check2 = true;
+      } else if (this.tabPanel[i].titleLabel.indexOf("comments :") > -1) {
+        check3 = true;
+      } else if (this.tabPanel[i].titleLabel.indexOf("files :") > -1) {
+        check4 = true;
+      } else if (this.tabPanel[i].titleLabel.indexOf("link :") > -1) {
+        check5 = true;
       }
     }
     if (!check) {
-      let hideOrShow = new PanelClass(viewer, "theme :");
+      let hideOrShow = new PanelClass(viewer, "Inspector :");
       var _container = document.createElement("div");
       _container.className = hideOrShow.container.id + "-pannelcontainer";
       _container.style.height = "calc(100% - 45px)";
@@ -140,6 +148,40 @@ export default {
       hideOrShow.container.appendChild(_container);
       new commentsComponentCtor().$mount(_container);
       event.$emit("createCommentsPanel", hideOrShow);
+    }
+    if (!check4) {
+      let hideOrShow = new PanelClass(viewer, "files :");
+      var _container = document.createElement("div");
+      _container.className = hideOrShow.container.id + "-pannelcontainer";
+      _container.style.height = "300px";
+      _container.style.overflowY = "auto";
+
+      hideOrShow.container.style.minWidth = "300px";
+      hideOrShow.container.style.width = "350px";
+      hideOrShow.container.style.height = "300px";
+      hideOrShow.container.style.minHeight = "200px";
+
+      hideOrShow.container.style.left = "40%";
+      hideOrShow.container.appendChild(_container);
+      new filesComponentCtor().$mount(_container);
+      event.$emit("createFilesPanel", hideOrShow);
+    }
+    if (!check5) {
+      let hideOrShow = new PanelClass(viewer, "link :");
+      var _container = document.createElement("div");
+      _container.className = hideOrShow.container.id + "-pannelcontainer";
+      _container.style.height = "300px";
+      _container.style.overflowY = "auto";
+
+      hideOrShow.container.style.minWidth = "300px";
+      hideOrShow.container.style.width = "350px";
+      hideOrShow.container.style.height = "300px";
+      hideOrShow.container.style.minHeight = "200px";
+
+      hideOrShow.container.style.left = "40%";
+      hideOrShow.container.appendChild(_container);
+      new linkComponentCtor().$mount(_container);
+      event.$emit("createLinkPanel", hideOrShow);
     }
   }
 };

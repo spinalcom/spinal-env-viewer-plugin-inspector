@@ -16,7 +16,8 @@ export default {
       prev: undefined,
       groupTabToDisplay: new Lst(),
       groupTabToRemove: new Lst(),
-      group: {}
+      group: {},
+      apps: false
     };
   },
   components: {},
@@ -40,6 +41,7 @@ export default {
     },
     displayTab: function() {
       // console.log("tab to display", this.groupTabToDisplay);
+
       for (let i = 0; i < this.groupTabToDisplay.length; i++) {
         const group = this.groupTabToDisplay[i];
         for (let j = 0; j < group.BIMObjects.length; j++) {
@@ -97,10 +99,12 @@ export default {
             this.prev = selectedGroup;
           }
         }
+        this.apps = false;
       });
       event.$on("colorEventList", item => {
         this.groupTabToDisplay.push(item);
         console.log(this.groupTabToDisplay);
+        this.apps = false;
       });
       event.$on("uncolorEventList", item => {
         for (let i = 0; i < this.groupTabToDisplay.length; i++) {
@@ -110,6 +114,59 @@ export default {
             this.groupTabToDisplay.splice(i, 1);
           }
         }
+        this.apps = false;
+      });
+      event.$on("collaboratorColorEvent", (selectedGroup, button) => {
+        if (this.apps === false) {
+          // on efface l'encien display et on met le unclassified display
+          if (this.prev) {
+            this.groupTabToDisplay = [];
+            for (let i = 0; i < this.prev.group.length; i++) {
+              this.groupTabToRemove.push(this.prev.group[i]);
+              this.apps = true;
+            }
+            this.groupTabToDisplay.push(selectedGroup.allObject);
+            this.prev = selectedGroup;
+          } else {
+            for (let i = 0; i < selectedGroup.allObject.length; i++) {
+              this.groupTabToDisplay.push(selectedGroup.allObject[i]);
+            }
+            this.prev = selectedGroup;
+            this.apps = true;
+          }
+        } else {
+          if (this.prev === selectedGroup) {
+            if (button == true) {
+              // on affiche le groupe reçu
+              console.log("DEBUG DU TAB");
+              this.groupTabToDisplay = [];
+              console.log(this.groupTabToDisplay);
+              for (let i = 0; i < selectedGroup.allObject.length; i++) {
+                this.groupTabToDisplay.push(selectedGroup.allObject[i]);
+              }
+              console.log(this.groupTabToDisplay);
+            } else {
+              // on efface le group reçu
+              this.groupTabToDisplay = [];
+              for (let i = 0; i < selectedGroup.allObject.length; i++) {
+                this.groupTabToRemove.push(selectedGroup.allObject[i]);
+              }
+            }
+          } else {
+            // le group reçu est differents du precedent.
+            // on efface le display de l'encien group et on affiche le nouveau.
+
+            for (let i = 0; i < this.prev.allObject.length; i++) {
+              this.groupTabToRemove.push(this.prev.allObject[i]);
+            }
+            this.groupTabToDisplay = [];
+            for (let i = 0; i < selectedGroup.allObject.length; i++) {
+              this.groupTabToDisplay.push(selectedGroup.allObject[i]);
+            }
+          }
+        }
+
+        this.apps = true;
       });
     },
     myBind: function() {

@@ -1,51 +1,36 @@
 <template>
-  <div id="app" style=" box-sizing: border-box; height: calc(100% - 50px)">
+  <div class="container-comments" id="app" style=" box-sizing: border-box; height: calc(100% - 50px)">
 
 
-<!-- <md-content class="md-layout md-gutter md-alignment-center md-scrollbar" style="box-sizing: border-box; overflow-y:auto; height: calc(75% - 50px)">
-        <md-card class="md-layout-item md-size-30" style=" box-sizing: border-box; min-width: 200px" v-for="(comment, index) in onModelChange()" :key="index">
-      <md-card-header>
-        <md-card-header-text>
-          <div class="md-title">{{comment.username.get()}}</div>
-          <div class="md-subhead">{{toDate(comment.date.get())}}</div>
-        </md-card-header-text>
-      </md-card-header>
+        <md-dialog :md-active.sync="active" v-model="value" md-confirm-text="Done" @md-confirm="myConfirm()">
+          <md-field style="margin:unset">
+            <label>Textarea</label>
+            <md-textarea v-model="value"></md-textarea>
+          </md-field>
+        <md-dialog-actions>
+        <md-button class="md-primary" @click="showDialog = false">Close</md-button>
+        <md-button class="md-primary" @click="myConfirm()">Confirm</md-button>
+      </md-dialog-actions> 
+        </md-dialog>
+  
 
-      <md-card-content class="words">
-        {{ comment.message.get()}}
-      </md-card-content>
-
-<md-card-expand>
-          <md-card-actions md-alignment="space-between">
-   <md-card-expand-trigger>
-            <md-button class="md-icon-button">
-              <md-icon>keyboard_arrow_down</md-icon>
-            </md-button>
-          </md-card-expand-trigger>
-</md-card-actions>
-
-    <md-card-expand-content>
-      <md-card-content >
-        {{ comment.message.get()}}
-      </md-card-content>
-    </md-card-expand-content>
-      </md-card-expand>
-    </md-card>
-</md-content> -->
 <md-content id="myList" class="md-scrollbar" style="box-sizing: border-box; overflow-y:auto; height: calc(75% - 20px)">
   <md-list>
     <md-list-item style="border-bottom: 1px solid grey; margin-top: 7px" v-for="(comment, index) in onModelChange()" :key="index">
       
+      <div style="width: 88%">
       <div class="md-list-item-text">
-      <div>
-        <span style="font-size: 15px;">{{comment.username.get()}}</span>
-        <span style="font-size: 10px;"> {{toDate(comment.date.get())}}</span>
+        <span  style="font-size: 15px; color: #819FF7">{{comment.username.get()}}</span>
+        <span style="font-size: 10px"> {{toDate(comment.date.get())}}</span>
       </div>
-      <span :style="getStyle(comment)"> {{ comment.message.get()}} </span>      
+      <pre class="mt-3" :style="getStyle(comment)"> {{ getMessage(comment)}} </pre>
       </div>
-      <!-- <md-button style="position: absolut; top: 0px; right: 0px; font-size: 10px;" class="md-icon-button">
+      <md-button style="position: absolute;top: 0px;right: 10px;" class="md-icon-button" @click="editMessage(comment)">
           <md-icon>edit</md-icon>
-        </md-button> -->
+      </md-button>
+      <md-button style="position: absolute;top: 0px;right: 0px; margin: unset" @click="removeMessage(comment)">
+        ×
+      </md-button>
     </md-list-item>
   </md-list>
 
@@ -56,14 +41,15 @@
 </div> -->
 </md-content>
 
-<md-field style="width: calc(100% - 5px); height: calc(15% - 20px); margin:unset">
-      <label>Textarea</label>
-      <md-textarea class="md-scrollbar" style="width: 100%; min-height: calc(100% - 10px); resize:unset; margin-top: 10px; padding-top: unset" v-model="message"></md-textarea>
+<md-field style="width: calc(100% - 5px);border-radius: 10px height: 23%; background-color: white; ">
+      <label style="color: #819FF7">...</label>
+      <md-textarea class="md-scrollbar" style="-webkit-text-fill-color: black; ;width: 100%; min-height: calc(100% - 10px); resize:unset; margin-top: 10px; padding-top: unset" v-model="message"></md-textarea>
+    <md-button style="min-width: 15px; width: unset; min-height: 15px; height: unset; color: black" @click.stop="addComments">
+      <md-icon style="color: black">send</md-icon>
+    </md-button>
     </md-field>
 
-    <md-button style="margin: unset" @click.stop="addComments">
-      <md-icon>send</md-icon> Send
-    </md-button>
+
   </div>
 </template>
 
@@ -83,7 +69,10 @@ export default {
         selectedObject: {},
         panel: {}
       },
-      message: ""
+      message: "",
+      value: "",
+      active: false,
+      myEditMessage: {}
     };
   },
 
@@ -104,7 +93,7 @@ export default {
         } else {
           this.currentPanel.selectedObject = selectedObject;
           this.currentPanel.panel.setTitle(
-            "comments: " + selectedObject.name.get()
+            "comments : " + selectedObject.name.get()
           );
           if (!this.currentPanel.panel.isVisible()) {
             this.currentPanel.panel.setVisible(true);
@@ -135,28 +124,44 @@ export default {
     addComments: function() {
       console.log(this.message);
       let user = spinalSystem.getUser();
-      var newMess = new message();
-      newMess.username.set(user.username);
-      newMess.owner.set(user.id);
-      newMess.message.set(this.message);
-      this.currentPanel.selectedObject.note.push(newMess);
-
+      if (this.message) {
+        var newMess = new message();
+        newMess.username.set(user.username);
+        newMess.owner.set(user.id);
+        newMess.message.set(this.message);
+        this.currentPanel.selectedObject.note.push(newMess);
+      }
       var container = this.$el.querySelector("#myList");
       container.scrollTop = container.scrollHeight;
     },
     removeMessage: function(comment) {
-      console.log(comment);
+      console.log(comment.message.get());
+      for (let i = 0; i < this.currentPanel.selectedObject.note.length; i++) {
+        const element = this.currentPanel.selectedObject.note[i];
+        if (element === comment)
+          this.currentPanel.selectedObject.note.splice(i, 1);
+      }
+    },
+    editMessage: function(comment) {
+      this.myEditMessage = comment;
+      this.active = true;
+    },
+    getMessage: function(comment) {
+      return comment.message.get();
+    },
+    myConfirm: function() {
+      this.myEditMessage.message.set(this.value);
+      this.active = false;
     },
     getStyle: function(comment) {
       var myStyle = {
         border: "",
-        "padding-top": "3%",
-        "padding-left": "3%",
         "padding-bottom": "3%",
         "border-radius": "10px",
-        "white-space": "nowrap",
         overflow: "hidden",
-        "white-space": "initial"
+        "white-space": "pre-line",
+        "margin-left": "14px"
+        // "word-spacing": "100vw"
       };
       // if (comment.username.get() === spinalSystem.getUser().username) {
       //   // myStyle.border = "1px solid blue";
@@ -195,5 +200,12 @@ export default {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+.container-comments button.md-button.md-theme-default {
+  min-width: 15px;
+  width: 15px;
+  min-height: 15px;
+  height: 15px;
 }
 </style>

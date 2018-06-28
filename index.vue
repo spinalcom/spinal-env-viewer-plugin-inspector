@@ -4,9 +4,9 @@ import Vue from "vue";
 import collaborator from "./collaborator.vue";
 const ComponentCtor = Vue.extend(collaborator);
 
-const ClassName = "inspector";
-const PanelTitle = "Inspector";
-const ButtonLabel = "Inspector";
+const ClassName = "Collaborator";
+const PanelTitle = "Collaborator";
+const ButtonLabel = "Collaborator";
 const ButtonIcon = "playlist_add";
 
 const classExtention = class {

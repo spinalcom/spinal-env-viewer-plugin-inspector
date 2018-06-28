@@ -1,13 +1,15 @@
 <template>
-  <md-content class="container-inspector md-scrollbar">
+  <md-content style="height: 100%" class="container-inspector md-scrollbar">
     <md-toolbar style="box-sizing: border-box;">
       <md-button class="md-icon-button" @click="back"><md-icon>keyboard_return</md-icon>
           <md-tooltip>return</md-tooltip>      
       </md-button>
       <add-group :inspector="inspector"></add-group>
+  <md-button class="md-icon-button" @click.stop="view()" @dblclick.stop>
+    <md-icon> {{icon}} </md-icon>
+  </md-button>
     </md-toolbar>
     <color-b-i-m-object></color-b-i-m-object>
-
     <list-inspector-panel :list="onModelChange()" :tabPanel="tabPanel"></list-inspector-panel>
     
     <deleteGroup :inspector="inspector"></deleteGroup>
@@ -22,7 +24,7 @@ import Vue from "vue";
 import addGroup from "./component/addGroup.vue";
 import listInspectorPanel from "./component/listInspectorPanel.vue";
 import deleteGroup from "./component/deleteGroup.vue";
-import colorBIMObject from "./component/colorBIMObject.vue";
+import colorBIMObject from "./component/colorBIMObject.1.vue";
 import event from "./component/event.vue";
 
 export default {
@@ -30,7 +32,8 @@ export default {
 
   data() {
     return {
-      copyInspector: {}
+      copyInspector: {},
+      icon: "visibility_off"
     };
   },
   components: {
@@ -41,6 +44,11 @@ export default {
   },
   props: ["inspector", "tabPanel"],
   methods: {
+    getEvent: function() {
+      event.$on("collaboratorIconAllEvent", icon => {
+        this.icon = icon;
+      });
+    },
     onModelChange: function() {
       var list = [];
       if (this.inspector)
@@ -49,6 +57,17 @@ export default {
         }
       return list;
     },
+    view: function() {
+      console.log(this.icon);
+      if (this.icon === "visibility_off") {
+        this.icon = "visibility";
+        event.$emit("collaboratorColorAllEvent", this.inspector, true);
+      } else {
+        this.icon = "visibility_off";
+        event.$emit("collaboratorColorAllEvent", this.inspector, false);
+      }
+      event.$emit("collaboratorIconAllEvent", this.icon);
+    },
     back: function() {
       event.$emit("selectedApp", app, false);
     }
@@ -56,70 +75,8 @@ export default {
   mounted() {
     viewer = window.spinal.ForgeViewer.viewer;
     spinalSystem = window.spinal.spinalSystem;
-
-    // spinalSystem.getModel().then(forgeFile => {
-    //   if (forgeFile) {
-    //     if (forgeFile.inspector) {
-    //       console.log("inspector is here");
-    //       forgeFile.inspector.load(inspector => {
-    //         this.inspector = inspector;
-    //         this.inspector.bind(this.onModelChange);
-    //       });
-    //     } else {
-    //       console.log("inspector is not here");
-    //       var list = new Lst();
-    //       forgeFile.add_attr({
-    //         inspector: new Ptr(list)
-    //       });
-    //       forgeFile.inspector.load(inspector => {
-    //         this.inspector = inspector;
-    //         this.inspector.bind(this.onModelChange);
-    //       });
-    //     }
-    //   }
-    // });
-    // var check = false;
-    // var check2 = false;
-    // for (let i = 0; i < this.tabPanel.length; i++) {
-    //   if (this.tabPanel[i].titleLabel.indexOf("theme: ") > -1) {
-    //     check = true;
-    //   }
-    //   if (this.tabPanel[i].titleLabel.indexOf("referential: ") > -1) {
-    //     check2 = true;
-    //   }
-    // }
-    // if (!check) {
-    //   let hideOrShow = new PanelClass(viewer, "theme :");
-    //   var _container = document.createElement("div");
-    //   _container.className = hideOrShow.container.id + "-pannelcontainer";
-    //   _container.style.height = "calc(100% - 45px)";
-    //   _container.style.overflowY = "auto";
-    //   hideOrShow.container.style.minWidth = "300px";
-    //   hideOrShow.container.style.width = "350px";
-    //   hideOrShow.container.style.height = "300px";
-    //   hideOrShow.container.style.minHeight = "200px";
-    //   hideOrShow.container.style.left = "calc(100vw - 481px)";
-    //   hideOrShow.container.appendChild(_container);
-    //   new themeComponentCtor().$mount(_container);
-    //   this.tabPanel.push(hideOrShow);
-    // }
-    // if (!check2) {
-    //   let hideOrShow = new PanelClass(viewer, "referential :");
-    //   var _container = document.createElement("div");
-    //   _container.className = hideOrShow.container.id + "-pannelcontainer";
-    //   _container.style.height = "300px";
-    //   _container.style.overflowY = "auto";
-
-    //   hideOrShow.container.style.minWidth = "300px";
-    //   hideOrShow.container.style.width = "350px";
-    //   hideOrShow.container.style.height = "300px";
-    //   hideOrShow.container.style.minHeight = "200px";
-
-    //   hideOrShow.container.style.left = "40%";
-    //   hideOrShow.container.appendChild(_container);
-    //   new refComponentCtor().$mount(_container);
-    //   this.tabPanel.push(hideOrShow);
-    // }
+    this.icon = "visibility_off";
+    this.getEvent();
   }
 };
 </script>
@@ -146,6 +103,11 @@ export default {
   font-size: 14px;
   border-bottom: 1px solid #212121;
 }
+
+.container-inspector .md-list-item-content.md-ripple {
+  padding: 0px 16px;
+}
+
 .container-inspector button.md-button.md-theme-default {
   min-width: 27px;
   width: 33px;

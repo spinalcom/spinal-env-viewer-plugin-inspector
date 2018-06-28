@@ -1,6 +1,6 @@
 <template>
-  <md-button class="md-icon-button" @click.stop="view(selectedGroup)">
-    <md-icon>{{icon}}</md-icon>
+  <md-button class="md-icon-button" @click.stop="view(selectedGroup)" @dblclick.stop>
+    <md-icon>{{currentIcon}}</md-icon>
     
   </md-button>
 </template>
@@ -17,8 +17,14 @@ export default {
   data() {
     return {
       allActive: true,
-      all: []
+      all: [],
+      currentIcon: "visibility_off"
     };
+  },
+  watch: {
+    icon: function() {
+      this.currentIcon = this.icon;
+    }
   },
   components: {},
   props: ["selectedGroup", "item", "icon"],
@@ -28,23 +34,24 @@ export default {
     },
     view: function(selectedGroup) {
       if (this.item) {
-        if (this.icon == "visibility_off") {
-          this.icon = "visibility";
+        if (this.currentIcon == "visibility_off") {
+          this.currentIcon = "visibility";
           event.$emit("colorEventList", this.item);
         } else {
-          this.icon = "visibility_off";
+          this.currentIcon = "visibility_off";
           event.$emit("uncolorEventList", this.item);
         }
       } else {
-        if (this.icon == "visibility_off") {
-          this.icon = "visibility";
+        if (this.currentIcon == "visibility_off") {
+          this.currentIcon = "visibility";
           event.$emit("colorEvent", selectedGroup, true);
         } else {
-          this.icon = "visibility_off";
+          this.currentIcon = "visibility_off";
           event.$emit("colorEvent", selectedGroup, false);
         }
-        event.$emit("iconEvent", this.icon, selectedGroup);
+        event.$emit("iconEvent", this.currentIcon, selectedGroup);
       }
+      event.$emit("collaboratorIconAllEvent", "visibility_off");
     }
   },
   mounted() {

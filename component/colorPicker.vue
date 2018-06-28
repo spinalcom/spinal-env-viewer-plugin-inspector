@@ -1,6 +1,6 @@
 <template>
   <md-menu md-direction="bottom-end" :md-close-on-select="false">
-      <md-button style="width: 40px; min-height: 20px; height: 20px; margin-top: 8px;" md-menu-trigger  :style="getColor()">
+      <md-button style="width: 40px; min-height: 20px; height: 20px; margin-top: 8px;" @dblclick.stop @click.stop  md-menu-trigger  :style="getColor()">
       </md-button>
     <md-menu-content >
         <div  @click.stop="vierge">

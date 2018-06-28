@@ -5,12 +5,12 @@
           <span>{{ spinalGroup.name.get()}}</span>  
           <md-tooltip>{{ spinalGroup.name.get()}}</md-tooltip>
         </div>
-        
+        <span :style="getCarre(spinalGroup)"></span>
           <icon-inspector-panel :selectedGroup="spinalGroup"></icon-inspector-panel>
-          <md-button class="md-icon-button" v-on:click.stop="referentialPanel(spinalGroup)">
-            <md-icon class="md-size-1x">location_city</md-icon>
+          <md-button class="md-icon-button" v-on:click.stop="referentialPanel(spinalGroup)" @dblclick.stop>
+            <md-icon class="md-size-1x">extension</md-icon>
           </md-button>
-          <md-button class="md-icon-button" v-on:click.stop="themePanel(spinalGroup, icon)">
+          <md-button class="md-icon-button" v-on:click.stop="themePanel(spinalGroup, icon)" @dblclick.stop>
             <md-icon>assignment</md-icon>
           </md-button>
           
@@ -48,20 +48,20 @@ export default {
       let hideOrShow;
       event.$emit("themeEvent", group, this.tabPanel);
       for (let i = 0; i < this.tabPanel.length; i++) {
-        if (this.tabPanel[i].titleLabel.indexOf("theme") > -1) {
+        if (this.tabPanel[i].titleLabel.indexOf("Inspector") > -1) {
           check = true;
           hideOrShow = this.tabPanel[i];
         }
       }
       if (check)
         if (!hideOrShow.isVisible()) {
-          this.currentNamePanel = "theme : " + group.name.get();
-          hideOrShow.setTitle("theme : " + group.name.get());
+          this.currentNamePanel = "Inspector : " + group.name.get();
+          hideOrShow.setTitle("Inspector : " + group.name.get());
           hideOrShow.setVisible(true);
         } else {
-          if (this.currentNamePanel != "theme : " + group.name.get()) {
-            this.currentNamePanel = "theme : " + group.name.get();
-            hideOrShow.setTitle("theme : " + group.name.get());
+          if (this.currentNamePanel != "Inspector : " + group.name.get()) {
+            this.currentNamePanel = "Inspector : " + group.name.get();
+            hideOrShow.setTitle("Inspector : " + group.name.get());
           } else hideOrShow.setVisible(false);
         }
     },
@@ -103,6 +103,17 @@ export default {
         tab.push(element.id.get());
       }
       viewer.fitToView(tab);
+    },
+    getCarre: function(selectedGroup) {
+      // console.log("GET CARRE");
+      // console.log(index);
+      return {
+        "background-color": selectedGroup.group[0].color.get(),
+        height: "20px",
+        width: "40px",
+        "border-radius": "4px",
+        "padding-left": "10px"
+      };
     }
   },
   mounted() {

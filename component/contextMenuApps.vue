@@ -11,8 +11,8 @@
           
           
             <commentaire :selected-object="selectedApp"> </commentaire>
-         
-
+            <files :selected-object="selectedApp"></files>
+            <my-link :selected-object="selectedApp"></my-link>
           <md-menu-item @click="active = true">
             <md-icon>delete_forever</md-icon>Delete
           </md-menu-item>
@@ -37,6 +37,8 @@ var viewer;
 
 import event from "./event.vue";
 import commentaire from "./commentaire.vue";
+import files from "./files.vue";
+import myLink from "./link.vue";
 
 export default {
   name: "addGroup",
@@ -46,7 +48,7 @@ export default {
       active: false
     };
   },
-  components: { commentaire },
+  components: { commentaire, files, myLink },
   props: ["collaborator", "selectedApp"],
   methods: {
     onConfirm: function() {
