@@ -1,5 +1,5 @@
 <template>
-  <md-content class="container md-scrollbar">
+  <md-content >
         <md-dialog-prompt
                       :md-active.sync="active"
                       v-model="value"
@@ -28,7 +28,7 @@ export default {
       value: ""
     };
   },
-  props: ["inspector"],
+  props: [],
   methods: {
     getEvent: function() {
       event.$on("renameGroup", selectedGroup => {
@@ -46,7 +46,6 @@ export default {
     viewer = window.spinal.ForgeViewer.viewer;
     spinalSystem = window.spinal.spinalSystem;
     this.getEvent();
-    // console.log(this.inspector);
   }
 };
 </script>

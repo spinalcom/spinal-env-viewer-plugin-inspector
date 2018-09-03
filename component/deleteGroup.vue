@@ -1,5 +1,5 @@
 <template>
-  <md-content class="container md-scrollbar">
+  <md-content>
         <md-dialog-confirm
       :md-active.sync="active"
       md-title="Are you sure ?"

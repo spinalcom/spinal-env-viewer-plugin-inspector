@@ -1,17 +1,22 @@
 <template>
     <md-list style="width=300px">
       <md-list-item v-for="index in list.length" :key="index" @click="selectObjects(list[index - 1])" @dblclick="zoomObjects(list[index -1])" style="width=300px;">
-        <span class="nameStyle" >{{ list[index - 1].name.get()}}
+        <span class="md-list-item-text" >{{ list[index - 1].name.get()}}
           <md-tooltip>{{ list[index - 1].name.get()}}</md-tooltip>
         </span>
         
           <change-group :item="list[index - 1]" :selectedgroup="selectedGroup"></change-group>
 
     <md-menu md-direction="bottom-end">
-      <md-button class="md-icon-button" @click.stop md-menu-trigger>
+      <md-button class="md-icon-button" @click.stop md-menu-trigger @dblclick.stop>
         <md-icon>more_vert</md-icon>
       </md-button>
       <md-menu-content>
+        <commentaire :selected-object="list[index - 1]"></commentaire>
+        <files :selected-object="list[index - 1]"></files>
+        <my-link :selected-object="list[index - 1]"></my-link>
+        
+        
         <md-menu-item  @click="rename(list[index - 1])">
             <md-icon>border_color</md-icon>Edit name
         </md-menu-item>
@@ -31,6 +36,9 @@ var viewer;
 
 import changeGroup from "./changeGroup.vue";
 import event from "./event.vue";
+import commentaire from "./commentaire.vue";
+import files from "./files.vue";
+import myLink from "./link.vue";
 
 export default {
   name: "addGroup",
@@ -41,7 +49,10 @@ export default {
     };
   },
   components: {
-    changeGroup
+    changeGroup,
+    commentaire,
+    files,
+    myLink
   },
   props: ["list", "selectedGroup"],
   methods: {

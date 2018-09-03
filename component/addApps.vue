@@ -1,24 +1,27 @@
 <template>
-  <div>
+<md-content style="height: unset;">
            <md-dialog-prompt
                       :md-active.sync="active"
                       v-model="value"
-                      md-title="What's your group name?"
+                      md-title="What's your app name?"
                       md-input-maxlength="30"
                       md-input-placeholder="Type your name..."
                       md-confirm-text="Done"
                       @md-confirm="addGroup" />
+  <md-toolbar style="box-sizing: border-box;">
     <md-button class="md-icon-button" @click="active = true"><md-icon>add_box</md-icon></md-button>
-  </div>
+    </md-toolbar>
+  </md-content>
 </template>
 
 
 <script>
 var spinalSystem;
 var viewer;
-import { group } from "../model/model";
+import { apps } from "../model/model";
+
 export default {
-  name: "addGroup",
+  name: "newFile",
 
   data() {
     return {
@@ -26,16 +29,16 @@ export default {
       active: false
     };
   },
-  props: ["inspector"],
+  components: {},
+  props: ["collaborator"],
   methods: {
     addGroup: function() {
-      console.log(this.inspector);
-      var myNewGroup = new group();
-      myNewGroup.name.set(this.value);
-      if (this.inspector) {
-        this.inspector.push(myNewGroup);
-        this.active = false;
-      }
+      var app = new apps();
+      app.name.set(this.value);
+      app.username.set(spinalSystem.getUser().username);
+      app.owner.set(spinalSystem.getUser().id);
+      this.collaborator.push(app);
+      this.active = false;
     }
   },
   mounted() {

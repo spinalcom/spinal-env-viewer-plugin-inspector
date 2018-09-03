@@ -1,44 +1,104 @@
 {
-    "name": "spinal-env-viewer-plugin-inspector",
-    "version": "1.0.0",
-    "description": "",
-    "main": "index.vue",
-    "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1"
-    },
-    "author": "",
-    "license": "ISC",
-    "dependencies": {
-        "vue-color": "https://github.com/xiaokaike/vue-color.git",
-        "spinal-models-bim_forge": "https://github.com/spinalcom/spinal-models-bim_forge.git",
-        "spinal-models-bim_viewer": "https://github.com/spinalcom/spinal-models-bim_viewer.git"
-    },
-    "devDependencies": {
-        "babel-core": "^6.0.0",
-        "babel-plugin-transform-runtime": "^6.23.0",
-        "babel-preset-es2015": "^6.0.0",
-        "babelify": "^7.2.0",
-        "browserify": "^13.0.1",
-        "browserify-hmr": "^0.3.6",
-        "commander": "^2.13.0",
-        "envify": "^3.4.1",
-        "eslint-config-prettier": "^2.9.0",
-        "eslint-plugin-prettier": "^2.6.0",
-        "exorcist": "^1.0.0",
-        "material-design-icons-iconfont": "^3.0.3",
-        "q": "^1.5.1",
-        "uglify-js": "^2.5.0",
-        "uglifyify": "^4.0.5",
-        "vue": "^2.0.1",
-        "vue-chartjs": "^3.2.1",
-        "vue-hot-reload-api": "^2.3.0",
-        "vue-material": "^1.0.0-beta-7",
-        "vue-rx": "^5.0.0",
-        "vueify": "^9.1.0",
-        "watchify": "^3.4.0",
-        "windowify": "^0.3.0"
-    },
-    "browserify": {
-        "transform": ["vueify", "babelify"]
+  "_args": [
+    [
+      {
+        "raw": "https://github.com/spinalcom/spinal-env-viewer-plugin-inspector.git#collaborator",
+        "scope": null,
+        "escapedName": null,
+        "name": null,
+        "rawSpec": "https://github.com/spinalcom/spinal-env-viewer-plugin-inspector.git#collaborator",
+        "spec": "git+https://github.com/spinalcom/spinal-env-viewer-plugin-inspector.git#collaborator",
+        "type": "hosted",
+        "hosted": {
+          "type": "github",
+          "ssh": "git@github.com:spinalcom/spinal-env-viewer-plugin-inspector.git#collaborator",
+          "sshUrl": "git+ssh://git@github.com/spinalcom/spinal-env-viewer-plugin-inspector.git#collaborator",
+          "httpsUrl": "git+https://github.com/spinalcom/spinal-env-viewer-plugin-inspector.git#collaborator",
+          "gitUrl": "git://github.com/spinalcom/spinal-env-viewer-plugin-inspector.git#collaborator",
+          "shortcut": "github:spinalcom/spinal-env-viewer-plugin-inspector#collaborator",
+          "directUrl": "https://raw.githubusercontent.com/spinalcom/spinal-env-viewer-plugin-inspector/collaborator/package.json"
+        }
+      },
+      "/home/spinalcom/spinalcom/spinal-viewer_sc2_4000"
+    ]
+  ],
+  "_from": "git+https://github.com/spinalcom/spinal-env-viewer-plugin-inspector.git#collaborator",
+  "_id": "spinal-env-viewer-plugin-inspector@1.0.0",
+  "_inCache": true,
+  "_location": "/spinal-env-viewer-plugin-inspector",
+  "_phantomChildren": {},
+  "_requested": {
+    "raw": "https://github.com/spinalcom/spinal-env-viewer-plugin-inspector.git#collaborator",
+    "scope": null,
+    "escapedName": null,
+    "name": null,
+    "rawSpec": "https://github.com/spinalcom/spinal-env-viewer-plugin-inspector.git#collaborator",
+    "spec": "git+https://github.com/spinalcom/spinal-env-viewer-plugin-inspector.git#collaborator",
+    "type": "hosted",
+    "hosted": {
+      "type": "github",
+      "ssh": "git@github.com:spinalcom/spinal-env-viewer-plugin-inspector.git#collaborator",
+      "sshUrl": "git+ssh://git@github.com/spinalcom/spinal-env-viewer-plugin-inspector.git#collaborator",
+      "httpsUrl": "git+https://github.com/spinalcom/spinal-env-viewer-plugin-inspector.git#collaborator",
+      "gitUrl": "git://github.com/spinalcom/spinal-env-viewer-plugin-inspector.git#collaborator",
+      "shortcut": "github:spinalcom/spinal-env-viewer-plugin-inspector#collaborator",
+      "directUrl": "https://raw.githubusercontent.com/spinalcom/spinal-env-viewer-plugin-inspector/collaborator/package.json"
     }
+  },
+  "_requiredBy": [
+    "#USER"
+  ],
+  "_resolved": "git+https://github.com/spinalcom/spinal-env-viewer-plugin-inspector.git#f1c57b51e25a6d71b4cdc5fc66d3b5cbd8d2999c",
+  "_shasum": "2881ba9ad36593f9bbc24c62e0efed5f52049ed6",
+  "_shrinkwrap": null,
+  "_spec": "https://github.com/spinalcom/spinal-env-viewer-plugin-inspector.git#collaborator",
+  "_where": "/home/spinalcom/spinalcom/spinal-viewer_sc2_4000",
+  "author": "",
+  "browserify": {
+    "transform": [
+      "vueify",
+      "babelify"
+    ]
+  },
+  "dependencies": {
+    "moment": "^2.22.2",
+    "spinal-models-bim_forge": "git+https://github.com/spinalcom/spinal-models-bim_forge.git",
+    "spinal-models-bim_viewer": "git+https://github.com/spinalcom/spinal-models-bim_viewer.git",
+    "vue-color": "git+https://github.com/xiaokaike/vue-color.git"
+  },
+  "devDependencies": {
+    "babel-core": "^6.0.0",
+    "babel-plugin-transform-runtime": "^6.23.0",
+    "babel-preset-es2015": "^6.0.0",
+    "babelify": "^7.2.0",
+    "browserify": "^13.0.1",
+    "browserify-hmr": "^0.3.6",
+    "commander": "^2.13.0",
+    "envify": "^3.4.1",
+    "eslint-config-prettier": "^2.9.0",
+    "eslint-plugin-prettier": "^2.6.0",
+    "exorcist": "^1.0.0",
+    "material-design-icons-iconfont": "^3.0.3",
+    "q": "^1.5.1",
+    "uglify-js": "^2.5.0",
+    "uglifyify": "^4.0.5",
+    "vue": "^2.0.1",
+    "vue-chartjs": "^3.2.1",
+    "vue-hot-reload-api": "^2.3.0",
+    "vue-material": "^1.0.0-beta-7",
+    "vue-rx": "^5.0.0",
+    "vueify": "^9.1.0",
+    "watchify": "^3.4.0",
+    "windowify": "^0.3.0"
+  },
+  "gitHead": "f1c57b51e25a6d71b4cdc5fc66d3b5cbd8d2999c",
+  "license": "ISC",
+  "main": "index.vue",
+  "name": "spinal-env-viewer-plugin-inspector",
+  "optionalDependencies": {},
+  "readme": "ERROR: No README data found!",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "version": "1.0.0"
 }

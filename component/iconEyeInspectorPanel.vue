@@ -1,5 +1,5 @@
 <template>
-  <md-button class="md-icon-button" @click.stop="view(selectedGroup)">
+  <md-button class="md-icon-button" @click.stop="view(selectedGroup)" @dblclick.stop>
     <md-icon>{{icon}}</md-icon>
     
   </md-button>
@@ -24,24 +24,29 @@ export default {
   components: {},
   props: ["selectedGroup"],
   methods: {
-    getEvent: function() {},
+    getEvent: function() {
+      event.$on("collaboratorIconAllEvent", icon => {
+        this.icon = icon;
+      });
+    },
     view: function(selectedGroup) {
       this.all = [];
       if (this.icon === "visibility") {
         this.icon = "visibility_off";
-        event.$emit("colorEvent", selectedGroup, false);
+        event.$emit("collaboratorColorEvent", selectedGroup, false);
       } else {
         this.icon = "visibility";
         console.log(selectedGroup);
-        event.$emit("colorEvent", selectedGroup, true);
+        event.$emit("collaboratorColorEvent", selectedGroup, true);
       }
 
-      event.$emit("iconEvent", this.icon, selectedGroup);
+      // event.$emit("iconEvent", this.icon, selectedGroup);
     }
   },
   mounted() {
     viewer = window.spinal.ForgeViewer.viewer;
     spinalSystem = window.spinal.spinalSystem;
+    this.getEvent();
   }
 };
 </script>

@@ -1,27 +1,27 @@
 <template>
-  <div>
+<md-content style="height: unset;">
            <md-dialog-prompt
                       :md-active.sync="active"
                       v-model="value"
-                      md-title="What's your group name?"
+                      md-title="What's your app name?"
                       md-input-maxlength="30"
                       md-input-placeholder="Type your name..."
                       md-confirm-text="Done"
-                      @md-confirm="addGroup" />
-  
-    <md-button class="md-icon-button" @click="active = true"><md-icon>add_box</md-icon></md-button>
-    
-  </div>
+                      @md-confirm="addLink" />
+  <md-toolbar style="box-sizing: border-box;">
+    <md-button @click="active = true">Add Link</md-button>
+    </md-toolbar>
+  </md-content>
 </template>
 
 
 <script>
 var spinalSystem;
 var viewer;
-import model from "spinal-models-bim_forge";
+// import { apps } from "../model/model";
 
 export default {
-  name: "addGroup",
+  name: "newFile",
 
   data() {
     return {
@@ -29,17 +29,15 @@ export default {
       active: false
     };
   },
-  props: ["selectedGroup"],
+  components: {},
+  props: ["collaborator"],
   methods: {
-    addGroup: function() {
-      var myNewGroup = new model.SpinalBIMGroupForge(
-        this.value,
-        [],
-        false,
-        "blue"
-      );
-      // myNewGroup.name.set(this.value);
-      this.selectedGroup.group.push(myNewGroup);
+    addLink: function() {
+      var app = new apps();
+      app.name.set(this.value);
+      app.username.set(spinalSystem.getUser().username);
+      app.owner.set(spinalSystem.getUser().id);
+      this.collaborator.push(app);
       this.active = false;
     }
   },

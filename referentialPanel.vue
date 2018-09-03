@@ -1,5 +1,5 @@
 <template>
-  <md-content class="container md-scrollbar">
+  <md-content class="container-inspector md-scrollbar">
     <md-toolbar style="box-sizing: border-box;">
           <md-button class="md-icon-button" v-if="group != selectedGroup" @click="referentialPanel()">
             <md-icon>location_city</md-icon>
@@ -16,13 +16,14 @@
           <md-button class="md-icon-button" @click="onConfirm()">
             <md-icon>delete_sweep</md-icon>
           </md-button>
+    </md-toolbar>
+
         <md-dialog-confirm
       :md-active.sync="active"
       md-title="You will definitly erase all your BIMObject, Are you sure ? "
       md-confirm-text="Agree"
       md-cancel-text="Disagree"
-      @md-confirm="deleteRef" />
-    </md-toolbar>
+      @md-confirm="deleteRef" />    
 
     <list-referential-panel :list="onModelChange()" :selectedGroup="group"></list-referential-panel>
   </md-content>
@@ -61,7 +62,7 @@ export default {
   methods: {
     getEvent: function() {
       event.$on("refEvent", (selectedGroup, theme, group) => {
-        console.log("CECI EST LE REFERENCIEL PANEL");
+        // console.log("CECI EST LE REFERENCIEL PANEL");
 
         if (theme) {
           this.theme = theme;
@@ -73,7 +74,7 @@ export default {
           this.group = selectedGroup;
         }
         this.selectedGroup = selectedGroup;
-        console.log(this.selectedGroup);
+        // console.log(this.selectedGroup);
         // this.referential.unbind(this.onModelChange);
         // this.referential.bind(this.onModelChange);
       });

@@ -1,11 +1,11 @@
 <template>
-  <md-content class="container md-scrollbar">
+  <md-content class="container-inspector md-scrollbar">
     <md-toolbar style="box-sizing: border-box;">
 
           <icon-eye-theme-panel :selectedGroup="selectedGroup" :icon="icon.i"></icon-eye-theme-panel>
           <addTheme :selectedGroup="selectedGroup"></addTheme>
           <md-button class="md-icon-button" v-on:click="referentialPanel(selectedGroup, false)">
-            <md-icon>location_city</md-icon>
+            <md-icon>extension</md-icon>
           </md-button>
           <md-button class="md-icon-button" @click="charts(selectedGroup)">
             <md-icon>insert_chart</md-icon>
@@ -14,7 +14,7 @@
 
 <md-list style="width=300px" >
       <md-list-item v-for="(item, index) in getNewList()" :key="index" @click="selectObjects(item)" @dblclick="zoomObjects(item)">
-        <div class="nameStyle">
+        <div class="md-list-item-text">
         <span>
           <md-tooltip>{{ item.name.get()}}</md-tooltip>
           {{ item.name.get()}}
@@ -23,18 +23,23 @@
         <div>
           <icon-eye-theme-panel :item="item" :selectedGroup="selectedGroup" :icon="icon.i"></icon-eye-theme-panel>
           <color-picker :selectedGroup="item"></color-picker>
-          <md-button class="md-icon-button" v-on:click.stop="referentialPanel(item, true)">
-            <md-icon>location_city</md-icon>
+          <md-button class="md-icon-button" v-on:click.stop="referentialPanel(item, true)" @dblclick.stop>
+            <md-icon>extension</md-icon>
           </md-button>
 
         <md-menu md-direction="bottom-end">
-      <md-button class="md-icon-button" @click.stop md-menu-trigger>
+      <md-button class="md-icon-button" @click.stop md-menu-trigger @dblclick.stop>
         <md-icon>more_vert</md-icon>
       </md-button>
       <md-menu-content>
         <md-menu-item v-if="index == 0"> <md-icon>not_interested</md-icon>
           Can't be delete
         </md-menu-item>
+        <commentaire :selected-object="item"></commentaire>
+        <files :selected-object="item"></files>
+        <my-link :selected-object="item"></my-link>
+        
+
         <md-menu-item  @click="rename(item)">
             <md-icon>border_color</md-icon>Edit name
         </md-menu-item>
@@ -62,6 +67,10 @@ import event from "./component/event.vue";
 import addTheme from "./component/addTheme.vue";
 import colorPicker from "./component/colorPicker.vue";
 import iconEyeThemePanel from "./component/iconEyeThemePanel.vue";
+import commentaire from "./component/commentaire.vue";
+import files from "./component/files.vue";
+import myLink from "./component/link.vue";
+
 var chartsPanel = require("./component/chartsManager.js");
 
 var newList = [];
@@ -83,7 +92,10 @@ export default {
   components: {
     addTheme,
     colorPicker,
-    iconEyeThemePanel
+    iconEyeThemePanel,
+    commentaire,
+    files,
+    myLink
   },
   props: ["inspector"],
   methods: {

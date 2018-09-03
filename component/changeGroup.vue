@@ -1,6 +1,6 @@
 <template>
-    <md-menu md-direction="bottom-end" :style="getColor()" style="width: 40px; height: 20px;">
-      <md-button style="width: 40px; height: 20px;" md-menu-trigger>
+    <md-menu md-direction="bottom-end" :style="getColor()" style="width: 40px; height: 20px; border-radius: 3px;">
+      <md-button style="width: 40px; height: 20px; border-radius: 3px;" @dblclick.stop @click.stop md-menu-trigger>
       </md-button>
     <md-menu-content>
         <md-menu-item v-for="(group, index) in onModelChange()" :key="index" v-on:click="changeGroup(group)">
@@ -60,7 +60,7 @@ export default {
     },
     onModelChange: function() {
       // console.log(this.group);
-      console.log(this.group);
+      // console.log(this.group);
       if (this.group) {
         if (this.group.color.get()) this.colors = this.group.color.get();
         groupList = [];
@@ -68,12 +68,12 @@ export default {
           groupList.push(this.selectedgroup.group[i]);
         }
       }
-      console.log(groupList);
+      // console.log(groupList);
       return groupList;
     },
     changeGroup: function(group) {
-      console.log(this.group);
-      console.log(this.item, group);
+      // console.log(this.group);
+      // console.log(this.item, group);
       for (let i = 0; i < this.group.BIMObjects.length; i++) {
         if (this.group.BIMObjects[i] == this.item) {
           viewer.restoreColorMaterial(
@@ -94,7 +94,7 @@ export default {
   mounted() {
     viewer = window.spinal.ForgeViewer.viewer;
     spinalSystem = window.spinal.spinalSystem;
-    console.log(this.item);
+    // console.log(this.item);
     this.copyItem = this.item;
     this.vierge();
   }
